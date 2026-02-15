@@ -16,43 +16,43 @@ function u(n) {
     t(e, {
       name: "description",
       get content() {
-        return i();
+        return "Iris x John";
       }
     }),
     t(e, {
       itemprop: "name",
       get content() {
-        return r();
+        return "Iris x John";
       }
     }),
     t(e, {
       itemprop: "description",
       get content() {
-        return i();
+        return "Iris x John";
       }
     }),
     t(e, {
       itemprop: "image",
       get content() {
-        return o();
+        return "";
       }
     }),
     t(e, {
       property: "og:title",
       get content() {
-        return r();
+        return "Iris x John";
       }
     }),
     t(e, {
       property: "og:description",
       get content() {
-        return i();
+        return "Iris x John";
       }
     }),
     t(e, {
       property: "og:image",
       get content() {
-        return o();
+        return "";
       }
     }),
     t(e, {
@@ -64,13 +64,13 @@ function u(n) {
     t(e, {
       name: "twitter:description",
       get content() {
-        return i();
+        return "Iris x John";
       }
     }),
     t(e, {
       name: "twitter:image",
       get content() {
-        return o();
+        return "";
       }
     })
   ];

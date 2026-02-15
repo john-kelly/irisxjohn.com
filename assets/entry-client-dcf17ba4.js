@@ -13781,9 +13781,9 @@ function Y5() {
   return h(wn, {
     rel: "icon",
     get href() {
-      return zo[e() % zo.length];
+      return "/favicon.svg";
     },
-    type: "image/png"
+    type: "image/svg+xml"
   });
 }
 function J5() {
@@ -13924,7 +13924,7 @@ function h6() {
                   Il(
                     a,
                     "innerHTML",
-                    "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-4Z27K9CL1F');"
+                    "window.dataLayer = window.dataLayer || [];"
                   ),
                   a
                 );

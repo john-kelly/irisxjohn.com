@@ -349,77 +349,145 @@
         overflow: hidden;
         visibility: hidden;
         opacity: 0;
-        transition: opacity 360ms ease, visibility 360ms ease;
+        transition: opacity 360ms ease, visibility 0s linear 360ms;
       }
 
       .gallery.is-open {
         visibility: visible;
         opacity: 1;
+        transition: opacity 360ms ease, visibility 0s;
       }
 
       .gallery-track {
         display: flex;
         align-items: center;
-        gap: clamp(20px, 3vw, 40px);
+        gap: clamp(36px, 4vw, 72px);
         height: 100%;
-        padding: 0 clamp(40px, 8vw, 120px);
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
+        padding: 0 clamp(40px, 5vw, 80px);
+        width: max-content;
+        animation: gallery-scroll 85s linear infinite;
+        will-change: transform;
       }
 
-      .gallery-track::-webkit-scrollbar { display: none; }
+      @keyframes gallery-scroll {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+
+      .gallery-item,
+      .gallery-sticker {
+        flex: 0 0 auto;
+      }
+
+      .gallery-track > *:nth-child(9n+1) { transform: rotate(-2deg); }
+      .gallery-track > *:nth-child(9n+2) { transform: rotate(3deg); }
+      .gallery-track > *:nth-child(9n+3) { transform: rotate(-1deg); }
+      .gallery-track > *:nth-child(9n+4) { transform: rotate(2deg); }
+      .gallery-track > *:nth-child(9n+5) { transform: rotate(-3deg); }
+      .gallery-track > *:nth-child(9n+6) { transform: rotate(1.5deg); }
+      .gallery-track > *:nth-child(9n+7) { transform: rotate(-2.5deg); }
+      .gallery-track > *:nth-child(9n+8) { transform: rotate(4deg); }
+      .gallery-track > *:nth-child(9n+9) { transform: rotate(-1.5deg); }
 
       .gallery-item {
-        flex: 0 0 auto;
-        width: clamp(260px, 42vh, 460px);
-        aspect-ratio: 4 / 5;
-        padding: clamp(12px, 1.6vw, 22px);
-        background: var(--cream);
-        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
-        scroll-snap-align: center;
-        transform: rotate(var(--tilt, 0deg));
+        position: relative;
+        overflow: hidden;
+        background: transparent;
       }
-
-      .gallery-item:nth-child(odd) { --tilt: -1.5deg; }
-      .gallery-item:nth-child(even) { --tilt: 1.5deg; }
 
       .gallery-item .photo {
         width: 100%;
-        height: 88%;
-        background: var(--ink);
+        height: 100%;
+        background-color: transparent;
         background-size: cover;
         background-position: center;
       }
 
-      .gallery-item figcaption {
-        margin-top: 10px;
-        font-family: var(--sans);
-        font-size: clamp(0.7rem, 0.9vw, 0.82rem);
-        font-weight: 500;
+      .gallery-sticker {
+        display: grid;
+        place-items: center;
+        padding: clamp(14px, 1.6vw, 28px) clamp(20px, 2.2vw, 40px);
+        border: clamp(6px, 0.7vw, 12px) solid #0a0a0a;
+        font-family: var(--serif);
+        font-weight: 900;
+        line-height: 0.95;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+      }
+
+      .gallery-sticker--gold {
+        background: var(--gold);
         color: #0a0a0a;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        text-align: center;
+        font-style: italic;
+        font-size: clamp(2.2rem, 4.6vw, 4.4rem);
+      }
+
+      .gallery-sticker--cream {
+        background: var(--cream);
+        color: #0a0a0a;
+        font-size: clamp(2.6rem, 5.4vw, 5.2rem);
+      }
+
+      .gallery-sticker--red {
+        background: var(--red);
+        color: var(--cream);
+        font-size: clamp(3.4rem, 7vw, 6.5rem);
+        line-height: 1;
+      }
+
+      .gallery-sticker em {
+        font-weight: 400;
+      }
+
+      .gallery-item--rect-tall {
+        width: clamp(220px, 26vw, 420px);
+        height: clamp(340px, 72vh, 620px);
+        border: clamp(8px, 0.9vw, 14px) solid var(--blue);
+      }
+
+      .gallery-item--oval-wide {
+        width: clamp(340px, 38vw, 620px);
+        height: clamp(280px, 50vh, 460px);
+        border: clamp(8px, 0.9vw, 14px) solid var(--red);
+        border-radius: 50%;
+      }
+
+      .gallery-item--circle {
+        width: clamp(300px, 32vw, 500px);
+        aspect-ratio: 1 / 1;
+        height: auto;
+        border: clamp(8px, 0.9vw, 14px) solid var(--gold);
+        border-radius: 50%;
+      }
+
+      .gallery-item--rect {
+        width: clamp(260px, 30vw, 460px);
+        height: clamp(300px, 60vh, 520px);
+        border: clamp(8px, 0.9vw, 14px) solid var(--cream);
+      }
+
+      .gallery-item--oval-tall {
+        width: clamp(260px, 28vw, 440px);
+        height: clamp(340px, 64vh, 580px);
+        border: clamp(8px, 0.9vw, 14px) solid var(--burgundy);
+        border-radius: 50%;
       }
 
       .gallery-close {
         position: fixed;
-        right: 20px;
-        bottom: 20px;
+        right: 24px;
+        bottom: 24px;
         z-index: 90;
         display: grid;
         place-items: center;
-        width: clamp(56px, 6vw, 72px);
-        height: clamp(56px, 6vw, 72px);
+        width: clamp(60px, 6vw, 80px);
+        height: clamp(60px, 6vw, 80px);
         padding: 0;
         border: 3px solid var(--gold);
-        border-radius: 4px;
         background: transparent;
         color: var(--gold);
         font-family: var(--sans);
-        font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+        font-size: clamp(1.6rem, 2.6vw, 2.2rem);
         font-weight: 500;
         line-height: 1;
         cursor: pointer;
@@ -432,6 +500,8 @@
         color: var(--ink);
         outline: none;
       }
+
+      .gallery-close-label { display: none; }
 
       /* Audio toggle ---------------------------------------------------- */
       .audio-toggle {
@@ -644,9 +714,42 @@
           padding: 80px 22px 130px;
         }
 
-        .gallery-trigger,
-        .audio-toggle,
-        .gallery { display: none !important; }
+        .gallery-trigger { display: none !important; }
+
+        .gallery-close {
+          display: inline-block;
+          width: auto;
+          height: auto;
+          padding: 12px 22px;
+          right: 22px;
+          bottom: 22px;
+          background: var(--cream);
+          border: 2px solid #000;
+          color: #000;
+          font-family: "SF Mono", ui-monospace, "Menlo", monospace;
+          font-size: 1.05rem;
+          font-weight: 700;
+          line-height: 1;
+          text-transform: lowercase;
+          box-shadow: 4px 4px 0 0 #000;
+          transition: box-shadow 140ms ease, transform 140ms ease;
+        }
+
+        .gallery-close:hover,
+        .gallery-close:focus-visible {
+          background: var(--cream);
+          color: #000;
+          transform: translate(-1px, -1px);
+          box-shadow: 5px 5px 0 0 #000;
+        }
+
+        .gallery-close:active {
+          transform: translate(2px, 2px);
+          box-shadow: 0 0 0 0 #000;
+        }
+
+        .gallery-close-icon { display: none; }
+        .gallery-close-label { display: inline; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -728,6 +831,7 @@
           <button class="mm-item" type="button" data-scene="story"><span class="mm-label">story</span></button>
           <button class="mm-item" type="button" data-scene="details"><span class="mm-label">details</span></button>
           <button class="mm-item" type="button" data-scene="registry"><span class="mm-label">registry</span></button>
+          <button class="mm-item" type="button" data-action="open-gallery"><span class="mm-label">photos</span></button>
           <button class="mm-item" type="button" data-scene="rsvp"><span class="mm-label">rsvp</span></button>
         </div>
         <button class="mm-toggle" type="button" id="mobileMenuToggle" aria-expanded="false">
@@ -743,33 +847,56 @@
 
       <div class="gallery" id="gallery" aria-hidden="true">
         <div class="gallery-track" id="galleryTrack">
-          <!-- Replace each .photo background with a real image: style="background-image: url('photos/01.jpg')" -->
-          <figure class="gallery-item">
-            <div class="photo" style="background: linear-gradient(135deg, #c11618, #6b1018);"></div>
-            <figcaption>Iris &amp; John · 01</figcaption>
+          <!-- Sample placeholder images. Swap with real photos by replacing each url(...) -->
+          <figure class="gallery-item gallery-item--rect-tall">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1517849845537-4d257902454a?w=900&q=80&auto=format&fit=crop')"></div>
           </figure>
-          <figure class="gallery-item">
-            <div class="photo" style="background: linear-gradient(135deg, #1c4ec9, #0a1f5c);"></div>
-            <figcaption>Iris &amp; John · 02</figcaption>
+          <div class="gallery-sticker gallery-sticker--gold">Iris <em>&amp;</em> John</div>
+          <figure class="gallery-item gallery-item--oval-wide">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=900&q=80&auto=format&fit=crop')"></div>
           </figure>
-          <figure class="gallery-item">
-            <div class="photo" style="background: linear-gradient(135deg, #ffd43a, #c1860a);"></div>
-            <figcaption>Iris &amp; John · 03</figcaption>
+          <figure class="gallery-item gallery-item--circle">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1551024506-0bccd828d307?w=900&q=80&auto=format&fit=crop')"></div>
           </figure>
-          <figure class="gallery-item">
-            <div class="photo" style="background: linear-gradient(135deg, #0d6638, #033018);"></div>
-            <figcaption>Iris &amp; John · 04</figcaption>
+          <div class="gallery-sticker gallery-sticker--cream">2026</div>
+          <figure class="gallery-item gallery-item--rect">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=900&q=80&auto=format&fit=crop')"></div>
           </figure>
-          <figure class="gallery-item">
-            <div class="photo" style="background: linear-gradient(135deg, #f5f1e8, #c0baad);"></div>
-            <figcaption>Iris &amp; John · 05</figcaption>
+          <figure class="gallery-item gallery-item--oval-tall">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=80&auto=format&fit=crop')"></div>
           </figure>
-          <figure class="gallery-item">
-            <div class="photo" style="background: linear-gradient(135deg, #6b1018, #2a060a);"></div>
-            <figcaption>Iris &amp; John · 06</figcaption>
+          <div class="gallery-sticker gallery-sticker--red">&hearts;</div>
+          <figure class="gallery-item gallery-item--rect-tall">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80&auto=format&fit=crop')"></div>
+          </figure>
+
+          <!-- Duplicate set for seamless marquee loop -->
+          <figure class="gallery-item gallery-item--rect-tall" aria-hidden="true">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1517849845537-4d257902454a?w=900&q=80&auto=format&fit=crop')"></div>
+          </figure>
+          <div class="gallery-sticker gallery-sticker--gold" aria-hidden="true">Iris <em>&amp;</em> John</div>
+          <figure class="gallery-item gallery-item--oval-wide" aria-hidden="true">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=900&q=80&auto=format&fit=crop')"></div>
+          </figure>
+          <figure class="gallery-item gallery-item--circle" aria-hidden="true">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1551024506-0bccd828d307?w=900&q=80&auto=format&fit=crop')"></div>
+          </figure>
+          <div class="gallery-sticker gallery-sticker--cream" aria-hidden="true">2026</div>
+          <figure class="gallery-item gallery-item--rect" aria-hidden="true">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=900&q=80&auto=format&fit=crop')"></div>
+          </figure>
+          <figure class="gallery-item gallery-item--oval-tall" aria-hidden="true">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=80&auto=format&fit=crop')"></div>
+          </figure>
+          <div class="gallery-sticker gallery-sticker--red" aria-hidden="true">&hearts;</div>
+          <figure class="gallery-item gallery-item--rect-tall" aria-hidden="true">
+            <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80&auto=format&fit=crop')"></div>
           </figure>
         </div>
-        <button class="gallery-close" type="button" id="galleryClose" aria-label="Close photo gallery">×</button>
+        <button class="gallery-close" type="button" id="galleryClose" aria-label="Close photo gallery">
+          <span class="gallery-close-icon" aria-hidden="true">×</span>
+          <span class="gallery-close-label" aria-hidden="true">&minus; photos</span>
+        </button>
       </div>
 
       <div class="enter" id="enter">
@@ -876,7 +1003,6 @@
       function openGallery() {
         gallery.classList.add("is-open");
         gallery.setAttribute("aria-hidden", "false");
-        galleryTrack.scrollTo({ left: 0 });
       }
 
       function closeGallery() {
@@ -887,18 +1013,18 @@
       galleryTrigger.addEventListener("click", openGallery);
       galleryClose.addEventListener("click", closeGallery);
 
+      document.querySelectorAll("[data-action='open-gallery']").forEach(el => {
+        el.addEventListener("click", () => {
+          setMobileMenuOpen(false);
+          openGallery();
+        });
+      });
+
       document.addEventListener("keydown", event => {
         if (event.key === "Escape" && gallery.classList.contains("is-open")) {
           closeGallery();
         }
       });
-
-      galleryTrack.addEventListener("wheel", event => {
-        if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
-          event.preventDefault();
-          galleryTrack.scrollBy({ left: event.deltaY, behavior: "auto" });
-        }
-      }, { passive: false });
     </script>
   </body>
 </html>

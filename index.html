@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="Iris and John's wedding website.">
     <title>Iris & John</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,6 +42,7 @@
       body {
         margin: 0;
         height: 100vh;
+        height: 100dvh;
         overflow: hidden;
         background: var(--ink);
       }
@@ -52,6 +53,7 @@
       .site-shell {
         position: relative;
         height: 100vh;
+        height: 100dvh;
         perspective: 1400px;
         perspective-origin: center center;
       }
@@ -131,7 +133,11 @@
 
       .scene {
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        height: 100dvh;
         z-index: 1;
         display: grid;
         align-items: center;
@@ -301,7 +307,7 @@
       .gallery-trigger {
         position: fixed;
         right: 20px;
-        bottom: 20px;
+        bottom: calc(20px + env(safe-area-inset-bottom));
         z-index: 40;
         width: clamp(64px, 7vw, 88px);
         height: clamp(64px, 7vw, 88px);
@@ -343,7 +349,11 @@
 
       .gallery {
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        height: 100dvh;
         z-index: 80;
         background: var(--green);
         overflow: hidden;
@@ -476,7 +486,7 @@
       .gallery-close {
         position: fixed;
         right: 24px;
-        bottom: 24px;
+        bottom: calc(24px + env(safe-area-inset-bottom));
         z-index: 90;
         display: grid;
         place-items: center;
@@ -504,7 +514,7 @@
       /* Audio toggle ---------------------------------------------------- */
       .audio-toggle {
         position: fixed;
-        bottom: 1rem;
+        bottom: calc(1rem + env(safe-area-inset-bottom));
         left: 1rem;
         z-index: 40;
         padding: 0;
@@ -534,7 +544,11 @@
       /* Enter overlay --------------------------------------------------- */
       .enter {
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        height: 100dvh;
         z-index: 100;
         display: grid;
         place-items: center;
@@ -617,7 +631,7 @@
         .mobile-menu {
           position: fixed;
           right: 22px;
-          bottom: 22px;
+          bottom: calc(22px + env(safe-area-inset-bottom));
           z-index: 40;
           display: flex;
           flex-direction: column;

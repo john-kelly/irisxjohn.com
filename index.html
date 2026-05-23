@@ -68,7 +68,7 @@
         gap: 16px;
         padding: 20px clamp(16px, 4vw, 40px) 16px;
         font-family: var(--sans);
-        color: var(--red);
+        color: #fff;
         text-transform: uppercase;
         mix-blend-mode: normal;
       }
@@ -112,7 +112,7 @@
         padding: 0;
         border: 0;
         background: transparent;
-        color: var(--red);
+        color: #fff;
         font-family: var(--serif);
         font-weight: 900;
         font-style: italic;
@@ -297,18 +297,6 @@
         line-height: 1.45;
       }
 
-      .panel-mark {
-        position: absolute;
-        right: clamp(24px, 6vw, 80px);
-        bottom: clamp(24px, 6vw, 60px);
-        font-family: var(--sans);
-        font-size: clamp(0.7rem, 0.9vw, 0.8rem);
-        font-weight: 500;
-        letter-spacing: 0.32em;
-        text-transform: uppercase;
-        opacity: 0.55;
-      }
-
       /* Gallery --------------------------------------------------------- */
       .gallery-trigger {
         position: fixed;
@@ -448,52 +436,31 @@
       /* Audio toggle ---------------------------------------------------- */
       .audio-toggle {
         position: fixed;
-        left: 20px;
-        bottom: 20px;
+        bottom: 1rem;
+        left: 1rem;
         z-index: 40;
-        display: grid;
-        place-items: center;
-        width: clamp(56px, 6vw, 72px);
-        height: clamp(56px, 6vw, 72px);
         padding: 0;
-        border: 3px solid var(--gold);
-        border-radius: 4px;
-        background: var(--burgundy);
-        color: var(--gold);
+        border: 0;
+        background: transparent;
+        color: inherit;
+        font-size: 2.5rem;
+        line-height: 1;
         cursor: pointer;
-        overflow: hidden;
-        transition: transform 200ms ease, background 200ms ease;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+        animation: music-wiggle 3.2s ease-in-out infinite;
+        transform-origin: center;
       }
 
-      .audio-toggle:hover,
-      .audio-toggle:focus-visible {
-        transform: scale(1.05);
-        outline: none;
+      .audio-toggle:focus-visible { outline: none; }
+
+      .audio-toggle.is-off {
+        text-decoration: line-through;
+        text-decoration-thickness: 2px;
       }
 
-      .audio-icon {
-        width: 46%;
-        height: 46%;
-        fill: currentColor;
-        transition: opacity 200ms ease;
-      }
-
-      .audio-strike {
-        position: absolute;
-        left: 14%;
-        right: 14%;
-        top: 50%;
-        height: 3px;
-        background: currentColor;
-        border-radius: 2px;
-        transform: translateY(-50%) rotate(-32deg) scaleX(0);
-        transform-origin: left center;
-        transition: transform 260ms cubic-bezier(.4, 0, .2, 1);
-        pointer-events: none;
-      }
-
-      .audio-toggle.is-off .audio-strike {
-        transform: translateY(-50%) rotate(-32deg) scaleX(1);
+      @keyframes music-wiggle {
+        0%, 100% { transform: rotate(-5deg); }
+        50%     { transform: rotate(5deg); }
       }
 
       /* Enter overlay --------------------------------------------------- */
@@ -572,17 +539,114 @@
         to { transform: perspective(1400px) rotateY(0deg); opacity: 1; }
       }
 
+      /* Mobile menu ----------------------------------------------------- */
+      .mobile-menu { display: none; }
+
       /* Responsive ------------------------------------------------------ */
       @media (max-width: 640px) {
-        .topbar {
-          grid-template-columns: 1fr 1fr;
-          padding: 14px 12px 10px;
-          gap: 8px;
+        .topbar { display: none; }
+
+        .mobile-menu {
+          position: fixed;
+          right: 22px;
+          bottom: 22px;
+          z-index: 40;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          font-family: "SF Mono", ui-monospace, "Menlo", monospace;
+          pointer-events: none;
         }
-        .wordmark { display: none; }
+
+        .mobile-menu-panel {
+          position: absolute;
+          right: 0;
+          bottom: calc(100% + 14px);
+          width: 230px;
+          padding: 18px 22px 20px;
+          background: var(--cream);
+          border: 2px solid #000;
+          visibility: hidden;
+          opacity: 0;
+          transform: translateY(8px);
+          transition: opacity 200ms ease, transform 200ms ease, visibility 0s linear 200ms;
+          pointer-events: auto;
+        }
+
+        .mobile-menu.is-open .mobile-menu-panel {
+          visibility: visible;
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 200ms ease, transform 200ms ease, visibility 0s;
+        }
+
+
+        .mm-item {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          width: 100%;
+          padding: 8px 0;
+          border: 0;
+          background: transparent;
+          color: #3838ff;
+          font: inherit;
+          font-size: 1.05rem;
+          text-align: right;
+          text-transform: lowercase;
+          cursor: pointer;
+        }
+
+        .mm-item:hover::before,
+        .mm-item.is-active::before {
+          content: "\2192";
+          margin-right: auto;
+          color: #000;
+          font-size: 0.9em;
+        }
+
+        .mm-item.is-active .mm-label {
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+
+        .mm-toggle {
+          position: relative;
+          padding: 12px 22px;
+          background: var(--cream);
+          border: 2px solid #000;
+          color: #000;
+          font: inherit;
+          font-size: 1.05rem;
+          font-weight: 700;
+          text-transform: lowercase;
+          cursor: pointer;
+          pointer-events: auto;
+          box-shadow: 4px 4px 0 0 #000;
+          transition: box-shadow 140ms ease, transform 140ms ease;
+        }
+
+        .mobile-menu.is-open .mm-toggle {
+          box-shadow: 0 0 0 0 #000;
+        }
+
+        .mm-toggle-glyph {
+          display: inline-block;
+          margin-right: 4px;
+        }
+
+        .mm-toggle-glyph::before { content: "+"; }
+        .mobile-menu.is-open .mm-toggle-glyph::before { content: "\2212"; }
+
         .info-row { grid-template-columns: 1fr; gap: 4px; }
-        .gallery-trigger, .gallery-close { right: 14px; bottom: 14px; }
-        .audio-toggle { left: 14px; bottom: 14px; }
+
+        .scene {
+          padding: 80px 22px 130px;
+        }
+
+        .gallery-trigger,
+        .audio-toggle,
+        .gallery { display: none !important; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -626,7 +690,6 @@
             <p class="kicker">A wedding</p>
             <p class="display">Iris <em>&amp;</em> John are<br>getting married.</p>
           </div>
-          <span class="panel-mark">No. 01</span>
         </section>
 
         <section class="scene scene--details" id="details">
@@ -640,7 +703,6 @@
               <div class="info-row"><dt>Attire</dt><dd>To be announced</dd></div>
             </dl>
           </div>
-          <span class="panel-mark">No. 02</span>
         </section>
 
         <section class="scene scene--registry" id="registry">
@@ -649,7 +711,6 @@
             <p class="display"><em>Your presence</em><br>is enough.</p>
             <p class="prose">Registry information will be shared with the invitation.</p>
           </div>
-          <span class="panel-mark">No. 03</span>
         </section>
 
         <section class="scene scene--rsvp" id="rsvp">
@@ -658,20 +719,27 @@
             <p class="display">Reply soon.</p>
             <p class="prose">Invitations and RSVP details will follow.</p>
           </div>
-          <span class="panel-mark">No. 04</span>
         </section>
       </main>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-panel">
+          <button class="mm-item is-active" type="button" data-scene="hero"><span class="mm-label">home</span></button>
+          <button class="mm-item" type="button" data-scene="story"><span class="mm-label">story</span></button>
+          <button class="mm-item" type="button" data-scene="details"><span class="mm-label">details</span></button>
+          <button class="mm-item" type="button" data-scene="registry"><span class="mm-label">registry</span></button>
+          <button class="mm-item" type="button" data-scene="rsvp"><span class="mm-label">rsvp</span></button>
+        </div>
+        <button class="mm-toggle" type="button" id="mobileMenuToggle" aria-expanded="false">
+          <span class="mm-toggle-glyph" aria-hidden="true"></span>menu
+        </button>
+      </div>
 
       <button class="gallery-trigger" type="button" id="galleryTrigger" aria-label="Open photo gallery">
         <span>Photos</span>
       </button>
 
-      <button class="audio-toggle is-off" type="button" id="audioToggle" aria-label="Toggle sound">
-        <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-        </svg>
-        <span class="audio-strike" aria-hidden="true"></span>
-      </button>
+      <button class="audio-toggle is-off" type="button" id="audioToggle" aria-label="Toggle music">♫</button>
 
       <div class="gallery" id="gallery" aria-hidden="true">
         <div class="gallery-track" id="galleryTrack">
@@ -721,6 +789,23 @@
       const galleryTrack = document.querySelector("#galleryTrack");
       const galleryTrigger = document.querySelector("#galleryTrigger");
       const galleryClose = document.querySelector("#galleryClose");
+      const mobileMenu = document.querySelector("#mobileMenu");
+      const mobileMenuToggle = document.querySelector("#mobileMenuToggle");
+
+      function setMobileMenuOpen(open) {
+        mobileMenu.classList.toggle("is-open", open);
+        mobileMenuToggle.setAttribute("aria-expanded", String(open));
+      }
+
+      function setActiveMenuItem(id) {
+        document.querySelectorAll(".mm-item").forEach(el => {
+          el.classList.toggle("is-active", el.dataset.scene === id);
+        });
+      }
+
+      mobileMenuToggle.addEventListener("click", () => {
+        setMobileMenuOpen(!mobileMenu.classList.contains("is-open"));
+      });
 
       // Audio --------------------------------------------------------------
       function setAudioState(isPlaying) {
@@ -756,6 +841,9 @@
       let leavingTimer = null;
 
       function showScene(id) {
+        setMobileMenuOpen(false);
+        setActiveMenuItem(id);
+
         if (id === currentScene) return;
         const next = document.getElementById(id);
         if (!next) return;

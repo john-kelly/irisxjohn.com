@@ -501,8 +501,6 @@
         outline: none;
       }
 
-      .gallery-close-label { display: none; }
-
       /* Audio toggle ---------------------------------------------------- */
       .audio-toggle {
         position: fixed;
@@ -715,41 +713,9 @@
         }
 
         .gallery-trigger { display: none !important; }
+        .gallery-close { display: none !important; }
 
-        .gallery-close {
-          display: inline-block;
-          width: auto;
-          height: auto;
-          padding: 12px 22px;
-          right: 22px;
-          bottom: 22px;
-          background: var(--cream);
-          border: 2px solid #000;
-          color: #000;
-          font-family: "SF Mono", ui-monospace, "Menlo", monospace;
-          font-size: 1.05rem;
-          font-weight: 700;
-          line-height: 1;
-          text-transform: lowercase;
-          box-shadow: 4px 4px 0 0 #000;
-          transition: box-shadow 140ms ease, transform 140ms ease;
-        }
-
-        .gallery-close:hover,
-        .gallery-close:focus-visible {
-          background: var(--cream);
-          color: #000;
-          transform: translate(-1px, -1px);
-          box-shadow: 5px 5px 0 0 #000;
-        }
-
-        .gallery-close:active {
-          transform: translate(2px, 2px);
-          box-shadow: 0 0 0 0 #000;
-        }
-
-        .gallery-close-icon { display: none; }
-        .gallery-close-label { display: inline; }
+        .gallery { z-index: 10; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -831,7 +797,7 @@
           <button class="mm-item" type="button" data-scene="story"><span class="mm-label">story</span></button>
           <button class="mm-item" type="button" data-scene="details"><span class="mm-label">details</span></button>
           <button class="mm-item" type="button" data-scene="registry"><span class="mm-label">registry</span></button>
-          <button class="mm-item" type="button" data-action="open-gallery"><span class="mm-label">photos</span></button>
+          <button class="mm-item" type="button" data-scene="photos"><span class="mm-label">photos</span></button>
           <button class="mm-item" type="button" data-scene="rsvp"><span class="mm-label">rsvp</span></button>
         </div>
         <button class="mm-toggle" type="button" id="mobileMenuToggle" aria-expanded="false">
@@ -893,10 +859,7 @@
             <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80&auto=format&fit=crop')"></div>
           </figure>
         </div>
-        <button class="gallery-close" type="button" id="galleryClose" aria-label="Close photo gallery">
-          <span class="gallery-close-icon" aria-hidden="true">×</span>
-          <span class="gallery-close-label" aria-hidden="true">&minus; photos</span>
-        </button>
+        <button class="gallery-close" type="button" id="galleryClose" aria-label="Close photo gallery">×</button>
       </div>
 
       <div class="enter" id="enter">
@@ -965,6 +928,7 @@
       // Scene transitions --------------------------------------------------
       const TRANSITION_MS = 900;
       let currentScene = "hero";
+      let previousScene = "hero";
       let leavingTimer = null;
 
       function showScene(id) {
@@ -972,23 +936,43 @@
         setActiveMenuItem(id);
 
         if (id === currentScene) return;
-        const next = document.getElementById(id);
-        if (!next) return;
-        const prev = document.getElementById(currentScene);
 
-        document.querySelectorAll(".scene.was-active").forEach(s => s.classList.remove("was-active"));
-        if (prev) {
-          prev.classList.remove("is-active");
-          prev.classList.add("was-active");
+        // Remember where we came from when entering photos so the close
+        // button can return there.
+        if (id === "photos" && currentScene !== "photos") {
+          previousScene = currentScene;
         }
-        next.classList.add("is-active");
+
+        // Close gallery whenever we navigate away from it (covers the case
+        // where it was opened as a desktop overlay and the viewport then
+        // resized to mobile — currentScene wouldn't be "photos" in that case).
+        if (gallery.classList.contains("is-open") && id !== "photos") {
+          closeGallery();
+        }
+
+        // Hide previous content (photos = gallery handled above; everything else = a .scene)
+        if (currentScene !== "photos") {
+          const prevEl = document.getElementById(currentScene);
+          if (prevEl) {
+            prevEl.classList.remove("is-active");
+            prevEl.classList.add("was-active");
+          }
+        }
+
+        // Show new content
+        if (id === "photos") {
+          openGallery();
+        } else {
+          const nextEl = document.getElementById(id);
+          if (!nextEl) return;
+          nextEl.classList.add("is-active");
+        }
+
         currentScene = id;
 
         clearTimeout(leavingTimer);
         leavingTimer = setTimeout(() => {
-          if (prev && !prev.classList.contains("is-active")) {
-            prev.classList.remove("was-active");
-          }
+          document.querySelectorAll(".scene.was-active").forEach(s => s.classList.remove("was-active"));
         }, TRANSITION_MS);
       }
 
@@ -1010,19 +994,42 @@
         gallery.setAttribute("aria-hidden", "true");
       }
 
-      galleryTrigger.addEventListener("click", openGallery);
-      galleryClose.addEventListener("click", closeGallery);
+      function dismissGallery() {
+        if (currentScene === "photos") {
+          // Photos was tracked as a scene (entered via mobile menu) — go back
+          // to whatever the user was on before entering it.
+          showScene(previousScene);
+        } else {
+          // Gallery was a transient desktop overlay; just close it.
+          closeGallery();
+        }
+      }
 
-      document.querySelectorAll("[data-action='open-gallery']").forEach(el => {
-        el.addEventListener("click", () => {
-          setMobileMenuOpen(false);
-          openGallery();
-        });
-      });
+      galleryTrigger.addEventListener("click", openGallery);
+      galleryClose.addEventListener("click", dismissGallery);
 
       document.addEventListener("keydown", event => {
         if (event.key === "Escape" && gallery.classList.contains("is-open")) {
-          closeGallery();
+          dismissGallery();
+        }
+      });
+
+      // If the gallery was opened as a desktop overlay and the user crosses
+      // into mobile width, adopt it as the "photos" scene so the menu reflects
+      // reality and navigating away cleans it up properly.
+      window.addEventListener("resize", () => {
+        if (
+          window.innerWidth <= 640 &&
+          gallery.classList.contains("is-open") &&
+          currentScene !== "photos"
+        ) {
+          previousScene = currentScene;
+          document.querySelectorAll(".scene.is-active, .scene.was-active").forEach(s => {
+            s.classList.remove("is-active");
+            s.classList.remove("was-active");
+          });
+          currentScene = "photos";
+          setActiveMenuItem("photos");
         }
       });
     </script>

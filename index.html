@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Iris and John's wedding website.">
+    <title>Iris & John</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+      @font-face {
+        font-family: "Helveesti";
+        src: url("fonts/ABCHelveesti-Medium_MP.subset.woff2") format("woff2");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      :root {
+        --ink: #0a0a0a;
+        --cream: #f5f1e8;
+        --gold: #ffd43a;
+        --red: #c11618;
+        --blue: #1c4ec9;
+        --green: #0d6638;
+        --burgundy: #6b1018;
+        --sans: Helveesti, "Helvetica Neue", Arial, sans-serif;
+        --serif: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+        --serif-body: "EB Garamond", "Iowan Old Style", Georgia, serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        color: var(--cream);
+        background: var(--ink);
+        font-family: var(--serif-body);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: var(--ink);
+      }
+
+      a { color: inherit; text-decoration: none; }
+      button { font: inherit; }
+
+      .site-shell {
+        position: relative;
+        height: 100vh;
+        perspective: 1400px;
+        perspective-origin: center center;
+      }
+
+      .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 30;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 16px;
+        padding: 20px clamp(16px, 4vw, 40px) 16px;
+        font-family: var(--sans);
+        color: var(--red);
+        text-transform: uppercase;
+        mix-blend-mode: normal;
+      }
+
+      .topbar::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
+      }
+
+      .nav-group {
+        display: flex;
+        align-items: center;
+        gap: clamp(18px, 3.6vw, 44px);
+      }
+
+      .nav-group--left { justify-self: start; }
+      .nav-group--right { justify-self: end; }
+
+      .nav-link {
+        display: inline-block;
+        padding: 6px 2px;
+        font-size: clamp(0.78rem, 1.1vw, 0.95rem);
+        font-weight: 500;
+        letter-spacing: 0.22em;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+        transition: opacity 180ms ease;
+      }
+
+      .nav-link:hover,
+      .nav-link:focus-visible {
+        opacity: 0.65;
+        outline: none;
+      }
+
+      .wordmark {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--red);
+        font-family: var(--serif);
+        font-weight: 900;
+        font-style: italic;
+        font-size: clamp(1rem, 1.5vw, 1.3rem);
+        line-height: 1;
+        letter-spacing: 0;
+        cursor: pointer;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+      }
+
+      .wordmark .amp {
+        font-weight: 400;
+        font-style: italic;
+        opacity: 0.92;
+      }
+
+      .scene {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        display: grid;
+        align-items: center;
+        padding: clamp(96px, 13vh, 150px) clamp(24px, 6vw, 80px) clamp(96px, 13vh, 130px);
+        overflow: hidden;
+        visibility: hidden;
+        backface-visibility: hidden;
+      }
+
+      .scene.is-active {
+        visibility: visible;
+        z-index: 10;
+      }
+
+      .scene.was-active {
+        visibility: visible;
+        z-index: 5;
+      }
+
+      /* Hero ------------------------------------------------------------ */
+      .scene--hero {
+        background: #000;
+        place-items: center;
+        text-align: center;
+      }
+
+      .scene--hero.is-active {
+        animation: hero-in 700ms ease both;
+      }
+
+      .hero-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-name {
+        margin: 0 0 28px;
+        color: var(--cream);
+        font-family: var(--serif);
+        font-weight: 900;
+        font-style: italic;
+        font-size: clamp(3rem, 11vw, 9rem);
+        line-height: 0.95;
+        letter-spacing: -0.01em;
+        text-shadow: 0 4px 28px rgba(0, 0, 0, 0.55);
+      }
+
+      .hero-name .amp {
+        font-weight: 400;
+      }
+
+      .subtitle {
+        margin: 0;
+        font-family: var(--sans);
+        color: var(--gold);
+        font-size: clamp(0.78rem, 1.1vw, 0.98rem);
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+      }
+
+      /* Panels ---------------------------------------------------------- */
+      .scene--story { background: var(--red); color: #0a0a0a; }
+      .scene--details { background: var(--blue); color: #0a0a0a; }
+      .scene--registry { background: var(--green); color: #0a0a0a; }
+      .scene--rsvp { background: var(--burgundy); color: var(--cream); }
+
+      .scene--story.is-active {
+        animation: push-from-right 800ms cubic-bezier(.6, .05, .25, 1) both;
+      }
+
+      .scene--details.is-active {
+        animation: wipe-down 850ms cubic-bezier(.55, 0, .25, 1) both;
+      }
+
+      .scene--registry.is-active {
+        animation: zoom-in 850ms cubic-bezier(.4, 1.4, .55, 1) both;
+      }
+
+      .scene--rsvp.is-active {
+        animation: swivel-in 900ms cubic-bezier(.55, 0, .25, 1) both;
+      }
+
+      .panel-inner {
+        width: min(1100px, 100%);
+        margin: 0 auto;
+      }
+
+      .panel-inner--narrow {
+        width: min(760px, 100%);
+      }
+
+      .kicker {
+        margin: 0 0 24px;
+        font-family: var(--sans);
+        font-size: clamp(0.74rem, 1vw, 0.88rem);
+        font-weight: 500;
+        letter-spacing: 0.36em;
+        text-transform: uppercase;
+      }
+
+      .display {
+        margin: 0;
+        font-family: var(--serif);
+        font-weight: 900;
+        font-size: clamp(2.4rem, 7vw, 6rem);
+        line-height: 0.98;
+        letter-spacing: -0.015em;
+      }
+
+      .display em {
+        font-style: italic;
+        font-weight: 400;
+      }
+
+      .info {
+        margin: 32px 0 0;
+        padding: 0;
+        border-top: 1px solid currentColor;
+      }
+
+      .info-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        gap: 24px;
+        padding: 18px 0;
+        border-bottom: 1px solid currentColor;
+        font-family: var(--serif-body);
+      }
+
+      .info-row dt {
+        font-family: var(--sans);
+        font-size: clamp(0.74rem, 1vw, 0.88rem);
+        font-weight: 500;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        line-height: 1.4;
+        opacity: 0.7;
+      }
+
+      .info-row dd {
+        margin: 0;
+        font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+        line-height: 1.3;
+      }
+
+      .prose {
+        margin: 22px 0 0;
+        max-width: 620px;
+        font-family: var(--serif-body);
+        font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+        line-height: 1.45;
+      }
+
+      .panel-mark {
+        position: absolute;
+        right: clamp(24px, 6vw, 80px);
+        bottom: clamp(24px, 6vw, 60px);
+        font-family: var(--sans);
+        font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+        font-weight: 500;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        opacity: 0.55;
+      }
+
+      /* Gallery --------------------------------------------------------- */
+      .gallery-trigger {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 40;
+        width: clamp(64px, 7vw, 88px);
+        height: clamp(64px, 7vw, 88px);
+        padding: 0;
+        border: 3px solid var(--gold);
+        border-radius: 4px;
+        background: var(--burgundy);
+        color: var(--gold);
+        font-family: var(--sans);
+        font-size: clamp(0.6rem, 0.85vw, 0.72rem);
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        cursor: pointer;
+        overflow: hidden;
+        transition: transform 200ms ease;
+      }
+
+      .gallery-trigger:hover { transform: scale(1.05); }
+
+      .gallery-trigger img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .gallery-trigger span {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.45));
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+      }
+
+      .gallery {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        background: var(--green);
+        overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 360ms ease, visibility 360ms ease;
+      }
+
+      .gallery.is-open {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .gallery-track {
+        display: flex;
+        align-items: center;
+        gap: clamp(20px, 3vw, 40px);
+        height: 100%;
+        padding: 0 clamp(40px, 8vw, 120px);
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+      }
+
+      .gallery-track::-webkit-scrollbar { display: none; }
+
+      .gallery-item {
+        flex: 0 0 auto;
+        width: clamp(260px, 42vh, 460px);
+        aspect-ratio: 4 / 5;
+        padding: clamp(12px, 1.6vw, 22px);
+        background: var(--cream);
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+        scroll-snap-align: center;
+        transform: rotate(var(--tilt, 0deg));
+      }
+
+      .gallery-item:nth-child(odd) { --tilt: -1.5deg; }
+      .gallery-item:nth-child(even) { --tilt: 1.5deg; }
+
+      .gallery-item .photo {
+        width: 100%;
+        height: 88%;
+        background: var(--ink);
+        background-size: cover;
+        background-position: center;
+      }
+
+      .gallery-item figcaption {
+        margin-top: 10px;
+        font-family: var(--sans);
+        font-size: clamp(0.7rem, 0.9vw, 0.82rem);
+        font-weight: 500;
+        color: #0a0a0a;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      .gallery-close {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 90;
+        display: grid;
+        place-items: center;
+        width: clamp(56px, 6vw, 72px);
+        height: clamp(56px, 6vw, 72px);
+        padding: 0;
+        border: 3px solid var(--gold);
+        border-radius: 4px;
+        background: transparent;
+        color: var(--gold);
+        font-family: var(--sans);
+        font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+        font-weight: 500;
+        line-height: 1;
+        cursor: pointer;
+        transition: background 180ms ease, color 180ms ease;
+      }
+
+      .gallery-close:hover,
+      .gallery-close:focus-visible {
+        background: var(--gold);
+        color: var(--ink);
+        outline: none;
+      }
+
+      /* Audio toggle ---------------------------------------------------- */
+      .audio-toggle {
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        z-index: 40;
+        display: grid;
+        place-items: center;
+        width: clamp(56px, 6vw, 72px);
+        height: clamp(56px, 6vw, 72px);
+        padding: 0;
+        border: 3px solid var(--gold);
+        border-radius: 4px;
+        background: var(--burgundy);
+        color: var(--gold);
+        cursor: pointer;
+        overflow: hidden;
+        transition: transform 200ms ease, background 200ms ease;
+      }
+
+      .audio-toggle:hover,
+      .audio-toggle:focus-visible {
+        transform: scale(1.05);
+        outline: none;
+      }
+
+      .audio-icon {
+        width: 46%;
+        height: 46%;
+        fill: currentColor;
+        transition: opacity 200ms ease;
+      }
+
+      .audio-strike {
+        position: absolute;
+        left: 14%;
+        right: 14%;
+        top: 50%;
+        height: 3px;
+        background: currentColor;
+        border-radius: 2px;
+        transform: translateY(-50%) rotate(-32deg) scaleX(0);
+        transform-origin: left center;
+        transition: transform 260ms cubic-bezier(.4, 0, .2, 1);
+        pointer-events: none;
+      }
+
+      .audio-toggle.is-off .audio-strike {
+        transform: translateY(-50%) rotate(-32deg) scaleX(1);
+      }
+
+      /* Enter overlay --------------------------------------------------- */
+      .enter {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        padding: 22px;
+        background: var(--red);
+        color: #0a0a0a;
+        transition: opacity 480ms ease, visibility 480ms ease;
+      }
+
+      .enter.is-hidden { visibility: hidden; opacity: 0; }
+
+      .enter-card { width: min(720px, 100%); text-align: center; }
+
+      .enter-title {
+        margin: 0 0 32px;
+        font-family: var(--serif);
+        font-weight: 900;
+        font-style: italic;
+        font-size: clamp(2.6rem, 9vw, 6rem);
+        line-height: 0.95;
+        letter-spacing: -0.01em;
+      }
+
+      .enter-button {
+        min-height: 48px;
+        padding: 12px 28px;
+        border: 2px solid #0a0a0a;
+        color: #0a0a0a;
+        background: transparent;
+        font-family: var(--sans);
+        font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+        font-weight: 500;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 180ms ease, color 180ms ease;
+      }
+
+      .enter-button:hover,
+      .enter-button:focus-visible {
+        background: #0a0a0a;
+        color: var(--red);
+        outline: none;
+      }
+
+      /* Keyframes ------------------------------------------------------- */
+      @keyframes hero-in {
+        from { opacity: 0; transform: scale(1.04); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      @keyframes push-from-right {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+      }
+
+      @keyframes wipe-down {
+        from { clip-path: inset(0 0 100% 0); }
+        to { clip-path: inset(0 0 0 0); }
+      }
+
+      @keyframes zoom-in {
+        from { transform: scale(0.35); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+
+      @keyframes swivel-in {
+        from { transform: perspective(1400px) rotateY(92deg); opacity: 0; }
+        45% { opacity: 1; }
+        to { transform: perspective(1400px) rotateY(0deg); opacity: 1; }
+      }
+
+      /* Responsive ------------------------------------------------------ */
+      @media (max-width: 640px) {
+        .topbar {
+          grid-template-columns: 1fr 1fr;
+          padding: 14px 12px 10px;
+          gap: 8px;
+        }
+        .wordmark { display: none; }
+        .info-row { grid-template-columns: 1fr; gap: 4px; }
+        .gallery-trigger, .gallery-close { right: 14px; bottom: 14px; }
+        .audio-toggle { left: 14px; bottom: 14px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="site-shell">
+      <audio id="soundtrack" src="song.mp3" loop preload="auto"></audio>
+
+      <nav class="topbar" aria-label="Wedding navigation">
+        <div class="nav-group nav-group--left">
+          <a class="nav-link" href="#story" data-scene="story">Story</a>
+          <a class="nav-link" href="#details" data-scene="details">Details</a>
+        </div>
+        <button class="wordmark" type="button" data-scene="hero">Iris <span class="amp">&amp;</span> John</button>
+        <div class="nav-group nav-group--right">
+          <a class="nav-link" href="#registry" data-scene="registry">Registry</a>
+          <a class="nav-link" href="#rsvp" data-scene="rsvp">RSVP</a>
+        </div>
+      </nav>
+
+      <main>
+        <section class="scene scene--hero is-active" id="hero">
+          <video class="hero-video" src="Untitled5.mp4" autoplay muted loop playsinline></video>
+          <div class="hero-inner">
+            <h1 class="hero-name">Iris <span class="amp">&amp;</span> John</h1>
+            <p class="subtitle">Save the date</p>
+          </div>
+        </section>
+
+        <section class="scene scene--story" id="story">
+          <div class="panel-inner">
+            <p class="kicker">A wedding</p>
+            <p class="display">Iris <em>&amp;</em> John are<br>getting married.</p>
+          </div>
+          <span class="panel-mark">No. 01</span>
+        </section>
+
+        <section class="scene scene--details" id="details">
+          <div class="panel-inner">
+            <p class="kicker">The Day</p>
+            <p class="display">Save the date.</p>
+            <dl class="info">
+              <div class="info-row"><dt>Date</dt><dd>To be announced</dd></div>
+              <div class="info-row"><dt>Ceremony</dt><dd>To be announced</dd></div>
+              <div class="info-row"><dt>Reception</dt><dd>To be announced</dd></div>
+              <div class="info-row"><dt>Attire</dt><dd>To be announced</dd></div>
+            </dl>
+          </div>
+          <span class="panel-mark">No. 02</span>
+        </section>
+
+        <section class="scene scene--registry" id="registry">
+          <div class="panel-inner panel-inner--narrow">
+            <p class="kicker">Registry</p>
+            <p class="display"><em>Your presence</em><br>is enough.</p>
+            <p class="prose">Registry information will be shared with the invitation.</p>
+          </div>
+          <span class="panel-mark">No. 03</span>
+        </section>
+
+        <section class="scene scene--rsvp" id="rsvp">
+          <div class="panel-inner panel-inner--narrow">
+            <p class="kicker">RSVP</p>
+            <p class="display">Reply soon.</p>
+            <p class="prose">Invitations and RSVP details will follow.</p>
+          </div>
+          <span class="panel-mark">No. 04</span>
+        </section>
+      </main>
+
+      <button class="gallery-trigger" type="button" id="galleryTrigger" aria-label="Open photo gallery">
+        <span>Photos</span>
+      </button>
+
+      <button class="audio-toggle is-off" type="button" id="audioToggle" aria-label="Toggle sound">
+        <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+        <span class="audio-strike" aria-hidden="true"></span>
+      </button>
+
+      <div class="gallery" id="gallery" aria-hidden="true">
+        <div class="gallery-track" id="galleryTrack">
+          <!-- Replace each .photo background with a real image: style="background-image: url('photos/01.jpg')" -->
+          <figure class="gallery-item">
+            <div class="photo" style="background: linear-gradient(135deg, #c11618, #6b1018);"></div>
+            <figcaption>Iris &amp; John · 01</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="photo" style="background: linear-gradient(135deg, #1c4ec9, #0a1f5c);"></div>
+            <figcaption>Iris &amp; John · 02</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="photo" style="background: linear-gradient(135deg, #ffd43a, #c1860a);"></div>
+            <figcaption>Iris &amp; John · 03</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="photo" style="background: linear-gradient(135deg, #0d6638, #033018);"></div>
+            <figcaption>Iris &amp; John · 04</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="photo" style="background: linear-gradient(135deg, #f5f1e8, #c0baad);"></div>
+            <figcaption>Iris &amp; John · 05</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <div class="photo" style="background: linear-gradient(135deg, #6b1018, #2a060a);"></div>
+            <figcaption>Iris &amp; John · 06</figcaption>
+          </figure>
+        </div>
+        <button class="gallery-close" type="button" id="galleryClose" aria-label="Close photo gallery">×</button>
+      </div>
+
+      <div class="enter" id="enter">
+        <div class="enter-card">
+          <p class="enter-title">Iris <span class="amp">&amp;</span> John</p>
+          <button class="enter-button" type="button" id="enterButton">Enter</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const enter = document.querySelector("#enter");
+      const enterButton = document.querySelector("#enterButton");
+      const audio = document.querySelector("#soundtrack");
+      const audioToggle = document.querySelector("#audioToggle");
+      const gallery = document.querySelector("#gallery");
+      const galleryTrack = document.querySelector("#galleryTrack");
+      const galleryTrigger = document.querySelector("#galleryTrigger");
+      const galleryClose = document.querySelector("#galleryClose");
+
+      // Audio --------------------------------------------------------------
+      function setAudioState(isPlaying) {
+        audioToggle.classList.toggle("is-off", !isPlaying);
+      }
+
+      async function playAudio() {
+        try {
+          await audio.play();
+          setAudioState(true);
+        } catch {
+          setAudioState(false);
+        }
+      }
+
+      enterButton.addEventListener("click", () => {
+        enter.classList.add("is-hidden");
+        playAudio();
+      });
+
+      audioToggle.addEventListener("click", () => {
+        if (audio.paused) {
+          playAudio();
+        } else {
+          audio.pause();
+          setAudioState(false);
+        }
+      });
+
+      // Scene transitions --------------------------------------------------
+      const TRANSITION_MS = 900;
+      let currentScene = "hero";
+      let leavingTimer = null;
+
+      function showScene(id) {
+        if (id === currentScene) return;
+        const next = document.getElementById(id);
+        if (!next) return;
+        const prev = document.getElementById(currentScene);
+
+        document.querySelectorAll(".scene.was-active").forEach(s => s.classList.remove("was-active"));
+        if (prev) {
+          prev.classList.remove("is-active");
+          prev.classList.add("was-active");
+        }
+        next.classList.add("is-active");
+        currentScene = id;
+
+        clearTimeout(leavingTimer);
+        leavingTimer = setTimeout(() => {
+          if (prev && !prev.classList.contains("is-active")) {
+            prev.classList.remove("was-active");
+          }
+        }, TRANSITION_MS);
+      }
+
+      document.querySelectorAll("[data-scene]").forEach(el => {
+        el.addEventListener("click", event => {
+          event.preventDefault();
+          showScene(el.dataset.scene);
+        });
+      });
+
+      // Gallery ------------------------------------------------------------
+      function openGallery() {
+        gallery.classList.add("is-open");
+        gallery.setAttribute("aria-hidden", "false");
+        galleryTrack.scrollTo({ left: 0 });
+      }
+
+      function closeGallery() {
+        gallery.classList.remove("is-open");
+        gallery.setAttribute("aria-hidden", "true");
+      }
+
+      galleryTrigger.addEventListener("click", openGallery);
+      galleryClose.addEventListener("click", closeGallery);
+
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && gallery.classList.contains("is-open")) {
+          closeGallery();
+        }
+      });
+
+      galleryTrack.addEventListener("wheel", event => {
+        if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+          event.preventDefault();
+          galleryTrack.scrollBy({ left: event.deltaY, behavior: "auto" });
+        }
+      }, { passive: false });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0d6638">
+    <meta name="description" content="Iris and John's wedding website.">
+    <title>Photos &mdash; Iris &amp; John</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="page--photos">
+    <audio id="soundtrack" src="song.mp3" loop preload="auto"></audio>
+
+    <nav class="topbar" aria-label="Wedding navigation">
+      <div class="nav-group nav-group--left">
+        <a class="nav-link" href="story.html">Story</a>
+        <a class="nav-link" href="details.html">Details</a>
+      </div>
+      <a class="wordmark" href="index.html">Iris <span class="amp">&amp;</span> John</a>
+      <div class="nav-group nav-group--right">
+        <a class="nav-link" href="registry.html">Registry</a>
+        <a class="nav-link" href="rsvp.html">RSVP</a>
+      </div>
+    </nav>
+
+    <main class="scene scene--photos">
+      <div class="gallery-track">
+        <figure class="gallery-item gallery-item--rect-tall">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1517849845537-4d257902454a?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <div class="gallery-sticker gallery-sticker--gold">Iris <em>&amp;</em> John</div>
+        <figure class="gallery-item gallery-item--oval-wide">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <figure class="gallery-item gallery-item--circle">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1551024506-0bccd828d307?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <div class="gallery-sticker gallery-sticker--cream">2026</div>
+        <figure class="gallery-item gallery-item--rect">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <figure class="gallery-item gallery-item--oval-tall">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <div class="gallery-sticker gallery-sticker--red">&hearts;</div>
+        <figure class="gallery-item gallery-item--rect-tall">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+
+        <figure class="gallery-item gallery-item--rect-tall" aria-hidden="true">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1517849845537-4d257902454a?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <div class="gallery-sticker gallery-sticker--gold" aria-hidden="true">Iris <em>&amp;</em> John</div>
+        <figure class="gallery-item gallery-item--oval-wide" aria-hidden="true">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <figure class="gallery-item gallery-item--circle" aria-hidden="true">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1551024506-0bccd828d307?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <div class="gallery-sticker gallery-sticker--cream" aria-hidden="true">2026</div>
+        <figure class="gallery-item gallery-item--rect" aria-hidden="true">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <figure class="gallery-item gallery-item--oval-tall" aria-hidden="true">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+        <div class="gallery-sticker gallery-sticker--red" aria-hidden="true">&hearts;</div>
+        <figure class="gallery-item gallery-item--rect-tall" aria-hidden="true">
+          <div class="photo" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80&auto=format&fit=crop')"></div>
+        </figure>
+      </div>
+    </main>
+
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Wedding navigation">
+      <div class="mobile-menu-panel">
+        <a class="mm-item" href="index.html"><span class="mm-label">home</span></a>
+        <a class="mm-item" href="story.html"><span class="mm-label">story</span></a>
+        <a class="mm-item" href="details.html"><span class="mm-label">details</span></a>
+        <a class="mm-item" href="registry.html"><span class="mm-label">registry</span></a>
+        <a class="mm-item is-active" href="photos.html"><span class="mm-label">photos</span></a>
+        <a class="mm-item" href="rsvp.html"><span class="mm-label">rsvp</span></a>
+      </div>
+      <button class="mm-toggle" type="button" id="mobileMenuToggle" aria-expanded="false">
+        <span class="mm-toggle-glyph" aria-hidden="true"></span>menu
+      </button>
+    </nav>
+
+    <a class="gallery-close" href="index.html" aria-label="Close photo gallery">&times;</a>
+
+    <button class="audio-toggle is-off" type="button" id="audioToggle" aria-label="Toggle music">&#9835;</button>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -5,22 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#c11618">
     <meta name="description" content="Iris and John's wedding website.">
-    <title>Iris &amp; John</title>
+    <title>Story &mdash; Iris &amp; John</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script>
-      // Skip enter overlay on return visits within the same session, so iOS 26
-      // Safari samples body bg (#000) instead of the enter overlay (red).
-      if (sessionStorage.getItem("iris-entered")) {
-        document.documentElement.classList.add("entered");
-        var m = document.querySelector('meta[name="theme-color"]');
-        if (m) m.setAttribute("content", "#000000");
-      }
-    </script>
   </head>
-  <body class="page--hero">
+  <body class="page--story">
     <audio id="soundtrack" src="song.mp3" loop preload="auto"></audio>
 
     <nav class="topbar" aria-label="Wedding navigation">
@@ -35,18 +26,17 @@
       </div>
     </nav>
 
-    <main class="scene scene--hero">
-      <video class="hero-video" src="Untitled5.mp4" autoplay muted loop playsinline></video>
-      <div class="hero-inner">
-        <h1 class="hero-name">Iris <span class="amp">&amp;</span> John</h1>
-        <p class="subtitle">Save the date</p>
+    <main class="scene scene--story">
+      <div class="panel-inner">
+        <p class="kicker">A wedding</p>
+        <p class="display">Iris <em>&amp;</em> John are<br>getting married.</p>
       </div>
     </main>
 
     <nav class="mobile-menu" id="mobileMenu" aria-label="Wedding navigation">
       <div class="mobile-menu-panel">
-        <a class="mm-item is-active" href="index.html"><span class="mm-label">home</span></a>
-        <a class="mm-item" href="story.html"><span class="mm-label">story</span></a>
+        <a class="mm-item" href="index.html"><span class="mm-label">home</span></a>
+        <a class="mm-item is-active" href="story.html"><span class="mm-label">story</span></a>
         <a class="mm-item" href="details.html"><span class="mm-label">details</span></a>
         <a class="mm-item" href="registry.html"><span class="mm-label">registry</span></a>
         <a class="mm-item" href="photos.html"><span class="mm-label">photos</span></a>
@@ -62,13 +52,6 @@
     </a>
 
     <button class="audio-toggle is-off" type="button" id="audioToggle" aria-label="Toggle music">&#9835;</button>
-
-    <div class="enter" id="enter">
-      <div class="enter-card">
-        <p class="enter-title">Iris <span class="amp">&amp;</span> John</p>
-        <button class="enter-button" type="button" id="enterButton">Enter</button>
-      </div>
-    </div>
 
     <script src="script.js"></script>
   </body>

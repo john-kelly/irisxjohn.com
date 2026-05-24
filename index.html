@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#c11618">
     <meta name="description" content="Iris and John's wedding website.">
     <title>Iris & John</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +45,8 @@
         height: 100vh;
         height: 100dvh;
         overflow: hidden;
-        background: var(--ink);
+        background: var(--red);
+        transition: background-color 400ms ease;
       }
 
       a { color: inherit; text-decoration: none; }
@@ -897,6 +899,25 @@
       const galleryClose = document.querySelector("#galleryClose");
       const mobileMenu = document.querySelector("#mobileMenu");
       const mobileMenuToggle = document.querySelector("#mobileMenuToggle");
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+      // Tint iOS Safari's URL bar to match the active scene. iOS 18+ samples
+      // body background-color; older iOS uses the theme-color meta tag.
+      const SCENE_COLORS = {
+        hero: "#000000",
+        story: "#c11618",
+        details: "#1c4ec9",
+        registry: "#0d6638",
+        rsvp: "#6b1018",
+        photos: "#0d6638",
+      };
+
+      function setThemeColor(id) {
+        const color = SCENE_COLORS[id];
+        if (!color) return;
+        document.body.style.backgroundColor = color;
+        if (themeColorMeta) themeColorMeta.setAttribute("content", color);
+      }
 
       function setMobileMenuOpen(open) {
         mobileMenu.classList.toggle("is-open", open);
@@ -929,6 +950,7 @@
 
       enterButton.addEventListener("click", () => {
         enter.classList.add("is-hidden");
+        setThemeColor(currentScene);
         playAudio();
       });
 
@@ -985,6 +1007,7 @@
         }
 
         currentScene = id;
+        setThemeColor(id);
 
         clearTimeout(leavingTimer);
         leavingTimer = setTimeout(() => {
@@ -1003,6 +1026,7 @@
       function openGallery() {
         gallery.classList.add("is-open");
         gallery.setAttribute("aria-hidden", "false");
+        setThemeColor("photos");
       }
 
       function closeGallery() {
@@ -1018,6 +1042,7 @@
         } else {
           // Gallery was a transient desktop overlay; just close it.
           closeGallery();
+          setThemeColor(currentScene);
         }
       }
 

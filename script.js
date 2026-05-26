@@ -42,8 +42,7 @@ if (audio && audioToggle) {
   });
 }
 
-// Enter overlay (hero page only) ---------------------------------------
-var enter = document.querySelector("#enter");
+// Enter gate (hero page only) ------------------------------------------
 var enterButton = document.querySelector("#enterButton");
 var vhsFx = document.querySelector("#vhsFx");
 
@@ -61,9 +60,11 @@ function runVhsEffect() {
   }, 2000);
 }
 
-if (enter && enterButton) {
+if (enterButton) {
   enterButton.addEventListener("click", () => {
-    enter.classList.add("is-hidden");
+    // Reveal the hero: veil fades, button -> subtitle, nav appears. The
+    // .hero-name title is already in place and doesn't move.
+    document.documentElement.classList.add("entered");
     sessionStorage.setItem("iris-entered", "1");
     // TODO: consider autoplaying music here
     // playAudio();
@@ -74,9 +75,5 @@ if (enter && enterButton) {
   // they loaded a page that wasnt the enter page
   sessionStorage.setItem("iris-entered", "1");
   // hack: sessions storage set might be async so just doing this to be safe
-  document.documentElement.classList.add("entered");
-}
-
-if (sessionStorage.getItem("iris-entered")) {
   document.documentElement.classList.add("entered");
 }

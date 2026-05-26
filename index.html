@@ -10,6 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script>
+      // Decide the entered/gated state before first paint so a returning
+      // visitor lands straight on the revealed hero with no flash or replay.
+      if (sessionStorage.getItem("iris-entered")) {
+        document.documentElement.classList.add("entered");
+      }
+    </script>
   </head>
   <body class="page--hero">
     <audio id="soundtrack" src="song.mp3" loop preload="auto"></audio>
@@ -28,9 +35,13 @@
 
     <main class="scene scene--hero video-wrapper vhs-video">
       <video class="hero-video" src="Untitled5.mp4" autoplay muted loop playsinline></video>
+      <div class="hero-veil" aria-hidden="true"></div>
       <div class="hero-inner">
         <h1 class="hero-name">Iris <span class="amp">&amp;</span> John</h1>
-        <p class="subtitle">Save the date</p>
+        <div class="hero-cue">
+          <p class="subtitle">Save the date</p>
+          <button class="enter-button" type="button" id="enterButton">Click to Enter</button>
+        </div>
       </div>
     </main>
 
@@ -53,13 +64,6 @@
     </a> -->
 
     <button class="audio-toggle is-off" type="button" id="audioToggle" aria-label="Toggle music">&#9835;</button>
-
-    <div class="enter" id="enter">
-      <div class="enter-card">
-        <p class="enter-title">Iris <span class="amp">&amp;</span> John</p>
-        <button class="enter-button" type="button" id="enterButton">Click to Enter</button>
-      </div>
-    </div>
 
       <div class="vhs-fx" id="vhsFx" aria-hidden="true">
         <!-- <div class="vhs-fx-static"></div> -->

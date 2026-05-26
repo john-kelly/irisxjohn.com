@@ -48,8 +48,21 @@ body {
 .page--rsvp { background: var(--burgundy); }
 .page--photos { background: var(--green); }
 
-/* Skip the enter overlay if the user has already entered this session. */
-html.entered .enter { display: none; }
+/* The hero doubles as the "enter" gate: before entering, a black veil hides
+   the video, the subtitle is hidden and the button shows. Entering fades the
+   veil out, swaps button -> subtitle, and reveals the nav. The single
+   .hero-name title never moves, so it lines up perfectly across the change. */
+html.entered .hero-veil { opacity: 0; visibility: hidden; }
+html.entered .enter-button { opacity: 0; visibility: hidden; pointer-events: none; }
+html:not(.entered) .subtitle { opacity: 0; }
+
+/* Pre-enter: keep the chrome out of the way until the gate is cleared. */
+html:not(.entered) .page--hero .topbar,
+html:not(.entered) .page--hero .mobile-menu,
+html:not(.entered) .page--hero .audio-toggle {
+  opacity: 0;
+  pointer-events: none;
+}
 
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
@@ -69,6 +82,7 @@ button { font: inherit; }
   font-family: var(--sans);
   color: #fff;
   text-transform: uppercase;
+  transition: opacity 600ms ease;
 }
 
 .topbar::before {
@@ -155,6 +169,16 @@ button { font: inherit; }
   z-index: 0;
 }
 
+/* Black veil that gates the hero. Sits above the video + noise (z 0/2) but
+   below the title block (.hero-inner is z 4), so the title shows through. */
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: #000;
+  transition: opacity 480ms ease, visibility 480ms ease;
+}
+
 .hero-inner {
   position: relative;
   z-index: 4;
@@ -170,10 +194,30 @@ button { font: inherit; }
   line-height: 0.95;
   letter-spacing: -0.01em;
   text-shadow: 0 4px 28px rgba(0, 0, 0, 0.55);
+  transition: color 480ms ease, text-shadow 480ms ease;
 }
 
 .hero-name .amp {
   font-weight: 400;
+}
+
+/* Pre-enter, the title carries the VHS glow/flicker; it settles to the plain
+   hero look on enter. */
+html:not(.entered) .hero-name {
+  color: #ede1c0;
+  text-shadow:
+    0 0 14px rgba(237, 225, 192, 0.32),
+    0 0 28px rgba(237, 225, 192, 0.16),
+    1px 0 0 rgba(150, 80, 80, 0.45),
+    -1px 0 0 rgba(80, 90, 150, 0.45);
+  animation: vhs-flicker 5s ease-in-out infinite;
+}
+
+/* The subtitle defines the block height; the button is centered over it so
+   swapping the two never shifts the title above. */
+.hero-cue {
+  position: relative;
+  display: inline-block;
 }
 
 .subtitle {
@@ -186,6 +230,7 @@ button { font: inherit; }
   letter-spacing: 0.42em;
   text-transform: uppercase;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  transition: opacity 480ms ease;
 }
 
 /* Panels ---------------------------------------------------------- */
@@ -464,6 +509,7 @@ button { font: inherit; }
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
   animation: music-wiggle 3.2s ease-in-out infinite;
   transform-origin: center;
+  transition: opacity 600ms ease;
 }
 
 .audio-toggle:focus-visible { outline: none; }
@@ -478,34 +524,14 @@ button { font: inherit; }
   50%     { transform: rotate(5deg); }
 }
 
-/* Enter overlay (hero page only) --------------------------------- */
-.enter {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: grid;
-  place-items: center;
-  padding: 22px;
-  background: black;
-  color: #0a0a0a;
-  transition: opacity 480ms ease, visibility 480ms ease;
-}
-
-.enter.is-hidden { visibility: hidden; opacity: 0; }
-
-.enter-card { width: min(720px, 100%); text-align: center; }
-
-.enter-title {
-  margin: 0 0 32px;
-  font-family: var(--serif);
-  font-weight: 900;
-  font-style: italic;
-  font-size: clamp(2.6rem, 9vw, 6rem);
-  line-height: 0.95;
-  letter-spacing: -0.01em;
-}
-
+/* Enter button (hero gate) --------------------------------------- */
+/* Absolutely centered over the subtitle so it occupies no layout height of
+   its own — the title above it stays put when button cross-fades to subtitle. */
 .enter-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   min-height: 48px;
   padding: 12px 28px;
   border: 2px solid #0a0a0a;
@@ -516,8 +542,10 @@ button { font: inherit; }
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
+  white-space: nowrap;
   cursor: pointer;
-  transition: background 180ms ease, color 180ms ease;
+  transition: opacity 360ms ease, visibility 360ms ease,
+              background 180ms ease, color 180ms ease;
 }
 
 .enter-button:hover,
@@ -546,6 +574,7 @@ button { font: inherit; }
     align-items: flex-end;
     font-family: "SF Mono", ui-monospace, "Menlo", monospace;
     pointer-events: none;
+    transition: opacity 600ms ease;
   }
 
   .mobile-menu-panel {
@@ -669,23 +698,6 @@ button { font: inherit; }
 
 
 
-
-  .enter-title {
-    margin: 0 0 36px;
-    font-family: var(--serif);
-    font-weight: 900;
-    font-style: italic;
-    font-size: clamp(2.8rem, 10vw, 7rem);
-    line-height: 0.95;
-    letter-spacing: -0.01em;
-    color: #ede1c0;
-    text-shadow:
-      0 0 14px rgba(237, 225, 192, 0.32),
-      0 0 28px rgba(237, 225, 192, 0.16),
-      1px 0 0 rgba(150, 80, 80, 0.45),
-      -1px 0 0 rgba(80, 90, 150, 0.45);
-    animation: vhs-flicker 5s ease-in-out infinite;
-  }
 
   @keyframes vhs-flicker {
     0%, 100% { opacity: 1; }

@@ -68,7 +68,7 @@ if (enter && enterButton) {
     // TODO: consider autoplaying music here
     // playAudio();
     setAudioState(false);
-    runVhsEffect();
+    // runVhsEffect();
   });
 } else {
   // they loaded a page that wasnt the enter page

@@ -45,7 +45,21 @@ if (audio && audioToggle) {
 // Enter overlay (hero page only) ---------------------------------------
 var enter = document.querySelector("#enter");
 var enterButton = document.querySelector("#enterButton");
+var vhsFx = document.querySelector("#vhsFx");
 
+
+function runVhsEffect() {
+  vhsFx.classList.remove("is-running");
+
+  // Restart the animation reliably
+  void vhsFx.offsetWidth;
+
+  vhsFx.classList.add("is-running");
+
+  setTimeout(() => {
+    vhsFx.classList.remove("is-running");
+  }, 2000);
+}
 
 if (enter && enterButton) {
   enterButton.addEventListener("click", () => {
@@ -54,6 +68,7 @@ if (enter && enterButton) {
     // TODO: consider autoplaying music here
     // playAudio();
     setAudioState(false);
+    runVhsEffect();
   });
 } else {
   // they loaded a page that wasnt the enter page

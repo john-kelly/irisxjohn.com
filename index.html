@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="styles.css">
     <script>
       // Decide the entered/gated state before first paint so a returning
-      // visitor lands straight on the revealed hero with no flash or replay.
+      // visitor lands straight on the revealed hero with the nav already in
+      // place — no flash, no replay, and no reveal delay.
       if (sessionStorage.getItem("iris-entered")) {
-        document.documentElement.classList.add("entered");
+        document.documentElement.classList.add("entered", "chrome-in");
       }
     </script>
   </head>

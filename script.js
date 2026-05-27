@@ -77,7 +77,7 @@ if (enterButton) {
   }
 
   enterButton.addEventListener("click", () => {
-    // Reveal the hero: veil fades, title fades in, button hides, nav appears.
+    // Open the gate now: veil reveals the video, title fades in, button hides.
     // The .hero-name title is already in place and doesn't move.
     document.documentElement.classList.add("entered");
     sessionStorage.setItem("iris-entered", "1");
@@ -86,6 +86,14 @@ if (enterButton) {
     // playAudio();
     setAudioState(false);
     // runVhsEffect();
+
+    // Hold the nav/chrome back so the circle-reveal plays for a beat and the
+    // video is on screen before the navigation fades in. Skip the wait when
+    // the reveal is disabled for reduced motion.
+    var revealDelay = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1000;
+    setTimeout(() => {
+      document.documentElement.classList.add("chrome-in");
+    }, revealDelay);
   });
 } else {
   // they loaded a page that wasnt the enter page

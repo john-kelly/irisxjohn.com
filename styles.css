@@ -61,12 +61,21 @@ body {
    reveals the title, hides the button, and brings in the nav. The button keeps
    its layout space when hidden so the title never shifts across the change. */
 html.entered .hero-veil { --hero-reveal: 110%; }
-html.entered .enter-button { opacity: 0; visibility: hidden; pointer-events: none; }
+/* Hide the enter button instantly on click (no fade) so it's gone the moment
+   the reveal starts. */
+html.entered .enter-button {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: none;
+}
 
-/* Pre-enter: keep the chrome out of the way until the gate is cleared. */
-html:not(.entered) .page--hero .topbar,
-html:not(.entered) .page--hero .mobile-menu,
-html:not(.entered) .page--hero .audio-toggle {
+/* Keep the chrome hidden until chrome-in is set — a beat after entering — so
+   the circle-reveal plays and the video is on screen before the nav fades in.
+   The 600ms opacity transition on each element handles the fade. */
+html:not(.chrome-in) .page--hero .topbar,
+html:not(.chrome-in) .page--hero .mobile-menu,
+html:not(.chrome-in) .page--hero .audio-toggle {
   opacity: 0;
   pointer-events: none;
 }

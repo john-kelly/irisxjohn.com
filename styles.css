@@ -184,24 +184,43 @@ button { font: inherit; }
   z-index: 0;
 }
 
-/* Black veil that gates the hero. Sits above the video + noise (z 0/2) but
-   below the title block (.hero-inner is z 4), so the title shows through. */
-.hero-veil {
+/*maybe wasnt working idk*/
+/*.hero-veil {
   --hero-reveal: 5%;
   position: absolute;
   inset: 0;
   z-index: 3;
   background: #000;
-  /* Entering grows a soft-edged transparent circle out of the center, which
-     "opens" the black to reveal the video behind it. The 5% feather on either
-     side of --hero-reveal gives the expanding edge a gentle glow rather than a
-     hard line; starting below 0% keeps it fully black until the gate is cleared. */
   -webkit-mask-image: radial-gradient(circle at center,
       transparent calc(var(--hero-reveal) - 5%),
       #000 calc(var(--hero-reveal) + 5%));
   mask-image: radial-gradient(circle at center,
       transparent calc(var(--hero-reveal) - 5%),
       #000 calc(var(--hero-reveal) + 5%));
+
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+
+  transition: --hero-reveal 3500ms cubic-bezier(0.22, 1, 0.36, 1);
+}*/
+
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: #000;
+  --hero-reveal: 5%;
+
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    transparent max(0%, calc(var(--hero-reveal) - 5%)),
+    #000 calc(var(--hero-reveal) + 5%)
+  );
+  mask-image: radial-gradient(
+    circle at center,
+    transparent max(0%, calc(var(--hero-reveal) - 5%)),
+    #000 calc(var(--hero-reveal) + 5%)
+  );
 
   -webkit-mask-mode: alpha;
   mask-mode: alpha;

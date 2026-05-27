@@ -90,10 +90,9 @@ if (enterButton) {
     // Hold the nav/chrome back so the circle-reveal plays for a beat and the
     // video is on screen before the navigation fades in. Skip the wait when
     // the reveal is disabled for reduced motion.
-    var revealDelay = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1000;
     setTimeout(() => {
       document.documentElement.classList.add("chrome-in");
-    }, revealDelay);
+    }, 2000);
   });
 } else {
   // they loaded a page that wasnt the enter page

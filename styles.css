@@ -909,18 +909,6 @@ html:not(.entered) .hero-name {
 }
 
 /* RSVP form ----------------------------------------------------------- */
-.rsvp .prose { margin-bottom: clamp(28px, 5vh, 44px); }
-
-.rsvp-label {
-  display: block;
-  margin-bottom: 12px;
-  font-family: var(--sans);
-  font-size: clamp(0.74rem, 1vw, 0.88rem);
-  font-weight: 500;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  opacity: 0.7;
-}
 
 /* Search + autocomplete */
 .rsvp-combo { position: relative; }
@@ -970,6 +958,7 @@ html:not(.entered) .hero-name {
   color: var(--ink);
   border: 2px solid var(--ink);
   box-shadow: 6px 6px 0 0 rgba(0, 0, 0, 0.35);
+  padding: 0;
 }
 
 .rsvp-result {

@@ -18,7 +18,11 @@ var audio = document.querySelector("#soundtrack");
 var audioToggle = document.querySelector("#audioToggle");
 
 function setAudioState(isPlaying) {
-  if (audioToggle) audioToggle.classList.toggle("is-off", !isPlaying);
+  if (isPlaying) {
+    audioToggle.classList.remove("is-off");
+  } else {
+    audioToggle.classList.add("is-off");
+  }
 }
 
 async function playAudio() {
@@ -40,11 +44,6 @@ if (audio && audioToggle) {
       setAudioState(false);
     }
   });
-
-  // The audio element is hx-preserve'd, so it keeps playing across boosted
-  // navigations while this toggle button gets recreated each swap. Sync the
-  // button to the real playback state on (re)load.
-  setAudioState(!audio.paused);
 }
 
 // Theme color ----------------------------------------------------------
@@ -126,20 +125,6 @@ function startHeroVideo() {
   if (playing && playing.catch) playing.catch(() => {});
 }
 
-
-function runVhsEffect() {
-  vhsFx.classList.remove("is-running");
-
-  // Restart the animation reliably
-  void vhsFx.offsetWidth;
-
-  vhsFx.classList.add("is-running");
-
-  setTimeout(() => {
-    vhsFx.classList.remove("is-running");
-  }, 2000);
-}
-
 if (enterButton) {
   // Returning visitor who already entered (e.g. navigated back here from
   // another page): reveal immediately and start the video on load.
@@ -157,10 +142,7 @@ if (enterButton) {
     document.documentElement.classList.add("entered");
     sessionStorage.setItem("iris-entered", "1");
     startHeroVideo();
-    // TODO: consider autoplaying music here
     playAudio();
-    // setAudioState(false);
-    // runVhsEffect();
 
     // Hold the nav/chrome back so the circle-reveal plays for a beat and the
     // video is on screen before the navigation fades in. Skip the wait when

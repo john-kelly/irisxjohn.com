@@ -41,12 +41,12 @@ async function playAudio() {
 // trick Safari into re-reading the color on every page. Other browsers
 // (mobile + desktop) just pick up the meta tag.
 function setThemeColor(color) {
-  var path = location.pathname;
-  var file = path.slice(path.lastIndexOf("/") + 1) || "index.html";
-  if (file === "index.html") {
-    void document.body.offsetHeight;
-    return;
-  }
+  // var path = location.pathname;
+  // var file = path.slice(path.lastIndexOf("/") + 1) || "index.html";
+  // if (file === "index.html") {
+  //   void document.body.offsetHeight;
+  //   return;
+  // }
 
 
   // 1. html + body backgrounds (iOS samples the body bg for the URL bar).
@@ -72,11 +72,21 @@ function setThemeColor(color) {
       "z-index:9999;" + (top ? "top:0" : "bottom:0") + ";background-color:" + color;
     document.body.appendChild(shim);
   }
+
+  function removeShim(id) {
+    var old = document.getElementById(id);
+    if (old) old.remove();
+  }
+
+
   replaceShim("shim-top", true);
   replaceShim("shim-bottom", false);
 
   // 4. Force a synchronous layout so Safari notices the changes.
   void document.body.offsetHeight;
+
+  removeShim("shim-top");
+  removeShim("shim-bottom");
 }
 
 // Per-page colors, matching the .page--X backgrounds in CSS. The hero body

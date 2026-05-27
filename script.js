@@ -77,8 +77,8 @@ if (enterButton) {
   }
 
   enterButton.addEventListener("click", () => {
-    // Reveal the hero: veil fades, button -> subtitle, nav appears. The
-    // .hero-name title is already in place and doesn't move.
+    // Reveal the hero: veil fades, title fades in, button hides, nav appears.
+    // The .hero-name title is already in place and doesn't move.
     document.documentElement.classList.add("entered");
     sessionStorage.setItem("iris-entered", "1");
     startHeroVideo();

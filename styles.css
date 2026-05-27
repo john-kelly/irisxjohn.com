@@ -23,7 +23,7 @@
   --cream: #f5f1e8;
   --gold: #ffd43a;
   --red: #c11618;
-  --blue: #1c4ec9;
+  --blue: #0076d0;
   --green: #0d6638;
   --burgundy: #6b1018;
   --sans: Helveesti, "Helvetica Neue", Arial, sans-serif;
@@ -107,7 +107,7 @@ button { font: inherit; }
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
+  /*background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));*/
 }
 
 .nav-group {

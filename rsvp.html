@@ -27,10 +27,43 @@
     </nav>
 
     <main class="scene scene--rsvp">
-      <div class="panel-inner panel-inner--narrow">
+      <div class="panel-inner panel-inner--narrow rsvp">
         <p class="kicker">RSVP</p>
-        <p class="display">Reply soon.</p>
-        <p class="prose">Invitations and RSVP details will follow.</p>
+        <p class="display">Will you join us?</p>
+        <p class="prose">Search your name to pull up your invitation, then check off everyone who can celebrate with us. You can update your reply anytime.</p>
+
+        <!-- Step 1 — find your invitation -->
+        <div class="rsvp-search" id="rsvpSearch">
+          <label class="rsvp-label" for="rsvpSearchInput">Find your invitation</label>
+          <div class="rsvp-combo">
+            <input
+              id="rsvpSearchInput"
+              class="rsvp-input"
+              type="text"
+              autocomplete="off"
+              autocapitalize="words"
+              spellcheck="false"
+              placeholder="Start typing your name…"
+              role="combobox"
+              aria-expanded="false"
+              aria-autocomplete="list"
+              aria-controls="rsvpResults">
+            <ul class="rsvp-results" id="rsvpResults" role="listbox" hidden></ul>
+          </div>
+          <p class="rsvp-hint" id="rsvpHint" role="status" aria-live="polite"></p>
+        </div>
+
+        <!-- Step 2 — the invitation (filled in by rsvp.js) -->
+        <form class="rsvp-invite" id="rsvpInvite" hidden>
+          <h2 class="rsvp-invite-title" id="rsvpInviteTitle"></h2>
+          <p class="rsvp-invite-cue">Check everyone who's coming. Leave anyone who can't make it unchecked.</p>
+          <ul class="guest-list" id="guestList"></ul>
+          <div class="rsvp-actions">
+            <button type="submit" class="rsvp-save" id="rsvpSave">Save RSVP</button>
+            <button type="button" class="rsvp-restart" id="rsvpRestart">Not you? Search again</button>
+          </div>
+          <p class="rsvp-status" id="rsvpStatus" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </main>
 
@@ -54,6 +87,8 @@
 
     <button class="audio-toggle is-off" type="button" id="audioToggle" aria-label="Toggle music">&#9835;</button>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
+    <script src="rsvp.js"></script>
   </body>
 </html>

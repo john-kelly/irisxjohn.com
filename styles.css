@@ -15,7 +15,7 @@
 @property --hero-reveal {
   syntax: "<percentage>";
   inherits: false;
-  initial-value: -6%;
+  initial-value: 0%;
 }
 
 :root {
@@ -187,6 +187,7 @@ button { font: inherit; }
 /* Black veil that gates the hero. Sits above the video + noise (z 0/2) but
    below the title block (.hero-inner is z 4), so the title shows through. */
 .hero-veil {
+  --hero-reveal: 5%;
   position: absolute;
   inset: 0;
   z-index: 3;
@@ -201,6 +202,10 @@ button { font: inherit; }
   mask-image: radial-gradient(circle at center,
       transparent calc(var(--hero-reveal) - 5%),
       #000 calc(var(--hero-reveal) + 5%));
+
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+
   transition: --hero-reveal 3500ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -586,7 +591,7 @@ html:not(.entered) .hero-name {
 .enter-button {
   min-height: 48px;
   padding: 12px 28px;
-  border: 2px solid #0a0a0a;
+  border: none;
   color: var(--gold);
   background: transparent;
   font-family: var(--sans);

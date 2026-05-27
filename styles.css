@@ -50,7 +50,7 @@ body {
 }
 
 /* iOS 26 Safari samples body background-color for the URL bar tint. */
-.page--hero { background: transparent; }
+.page--hero { background: black; }
 .page--story { background: var(--red); }
 .page--details { background: var(--blue); }
 .page--registry { background: var(--green); }

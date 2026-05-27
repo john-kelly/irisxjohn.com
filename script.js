@@ -14,10 +14,8 @@ if (mobileMenuToggle && mobileMenu) {
 }
 
 // Audio ----------------------------------------------------------------
-var audio = document.querySelector("#soundtrack");
-var audioToggle = document.querySelector("#audioToggle");
-
 function setAudioState(isPlaying) {
+  var audioToggle = document.querySelector("#audioToggle");
   if (isPlaying) {
     audioToggle.classList.remove("is-off");
   } else {
@@ -26,6 +24,7 @@ function setAudioState(isPlaying) {
 }
 
 async function playAudio() {
+  var audio = document.querySelector("#soundtrack");
   if (!audio) return;
   try {
     await audio.play();
@@ -33,17 +32,6 @@ async function playAudio() {
   } catch {
     setAudioState(false);
   }
-}
-
-if (audio && audioToggle) {
-  audioToggle.addEventListener("click", () => {
-    if (audio.paused) {
-      playAudio();
-    } else {
-      audio.pause();
-      setAudioState(false);
-    }
-  });
 }
 
 // Theme color ----------------------------------------------------------
@@ -107,14 +95,45 @@ function pageThemeColor() {
 if (!window.__themeColorBound) {
   window.__themeColorBound = true;
   setThemeColor(pageThemeColor());
+
+  (function() {
+    var audio = document.querySelector("#soundtrack");
+    var audioToggle = document.querySelector("#audioToggle");
+    if (audio && audioToggle) {
+      audioToggle.addEventListener("click", () => {
+        if (audio.paused) {
+          playAudio();
+        } else {
+          audio.pause();
+          setAudioState(false);
+        }
+      });
+    }
+    setAudioState(!audio.paused);
+  })();
+
   document.addEventListener("htmx:afterSettle", function () {
     setThemeColor(pageThemeColor());
+
+    var audio = document.querySelector("#soundtrack");
+    var audioToggle = document.querySelector("#audioToggle");
+    if (audio && audioToggle) {
+      audioToggle.addEventListener("click", () => {
+        if (audio.paused) {
+          playAudio();
+        } else {
+          audio.pause();
+          setAudioState(false);
+        }
+      });
+    }
+
+    setAudioState(!audio.paused);
   });
 }
 
 // Enter gate (hero page only) ------------------------------------------
 var enterButton = document.querySelector("#enterButton");
-var vhsFx = document.querySelector("#vhsFx");
 var heroVideo = document.querySelector(".hero-video");
 
 function startHeroVideo() {

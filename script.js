@@ -45,6 +45,15 @@ if (audio && audioToggle) {
 // Enter gate (hero page only) ------------------------------------------
 var enterButton = document.querySelector("#enterButton");
 var vhsFx = document.querySelector("#vhsFx");
+var heroVideo = document.querySelector(".hero-video");
+
+function startHeroVideo() {
+  if (!heroVideo) return;
+  // Muted playback is allowed without a user gesture, so this also works
+  // on load for a returning visitor who's already entered.
+  var playing = heroVideo.play();
+  if (playing && playing.catch) playing.catch(() => {});
+}
 
 
 function runVhsEffect() {
@@ -61,11 +70,18 @@ function runVhsEffect() {
 }
 
 if (enterButton) {
+  // Returning visitor who already entered (e.g. navigated back here from
+  // another page): reveal immediately and start the video on load.
+  if (sessionStorage.getItem("iris-entered")) {
+    startHeroVideo();
+  }
+
   enterButton.addEventListener("click", () => {
     // Reveal the hero: veil fades, button -> subtitle, nav appears. The
     // .hero-name title is already in place and doesn't move.
     document.documentElement.classList.add("entered");
     sessionStorage.setItem("iris-entered", "1");
+    startHeroVideo();
     // TODO: consider autoplaying music here
     // playAudio();
     setAudioState(false);

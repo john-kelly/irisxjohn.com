@@ -10,6 +10,14 @@
   navigation: auto;
 }
 
+/* Animatable radius for the hero circle-reveal mask. Registering it as a
+   <percentage> is what lets it transition smoothly instead of jumping. */
+@property --hero-reveal {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: -6%;
+}
+
 :root {
   --ink: #0a0a0a;
   --cream: #f5f1e8;
@@ -52,7 +60,7 @@ body {
    the video, the subtitle is hidden and the button shows. Entering fades the
    veil out, swaps button -> subtitle, and reveals the nav. The single
    .hero-name title never moves, so it lines up perfectly across the change. */
-html.entered .hero-veil { opacity: 0; visibility: hidden; }
+html.entered .hero-veil { --hero-reveal: 110%; }
 html.entered .enter-button { opacity: 0; visibility: hidden; pointer-events: none; }
 html:not(.entered) .subtitle { opacity: 0; }
 
@@ -176,7 +184,21 @@ button { font: inherit; }
   inset: 0;
   z-index: 3;
   background: #000;
-  transition: opacity 480ms ease, visibility 480ms ease;
+  /* Entering grows a soft-edged transparent circle out of the center, which
+     "opens" the black to reveal the video behind it. The 5% feather on either
+     side of --hero-reveal gives the expanding edge a gentle glow rather than a
+     hard line; starting below 0% keeps it fully black until the gate is cleared. */
+  -webkit-mask-image: radial-gradient(circle at center,
+      transparent calc(var(--hero-reveal) - 5%),
+      #000 calc(var(--hero-reveal) + 5%));
+  mask-image: radial-gradient(circle at center,
+      transparent calc(var(--hero-reveal) - 5%),
+      #000 calc(var(--hero-reveal) + 5%));
+  transition: --hero-reveal 3000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-veil { transition: none; }
 }
 
 .hero-inner {
@@ -800,7 +822,7 @@ html:not(.entered) .hero-name {
   pointer-events: none;
   z-index: 2;
 
-  opacity: 0.75;
+  opacity: 0.5;
   mix-blend-mode: luminosity;
 
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/></svg>");

@@ -40,6 +40,11 @@ if (audio && audioToggle) {
       setAudioState(false);
     }
   });
+
+  // The audio element is hx-preserve'd, so it keeps playing across boosted
+  // navigations while this toggle button gets recreated each swap. Sync the
+  // button to the real playback state on (re)load.
+  // setAudioState(!audio.paused);
 }
 
 // Enter gate (hero page only) ------------------------------------------
@@ -73,6 +78,10 @@ if (enterButton) {
   // Returning visitor who already entered (e.g. navigated back here from
   // another page): reveal immediately and start the video on load.
   if (sessionStorage.getItem("iris-entered")) {
+    // Returning here via a boosted nav skips the <head> pre-paint script, so
+    // re-apply the revealed + chrome-in state. Idempotent on a full load where
+    // that head script already added these classes.
+    document.documentElement.classList.add("entered", "chrome-in");
     startHeroVideo();
   }
 
@@ -83,8 +92,8 @@ if (enterButton) {
     sessionStorage.setItem("iris-entered", "1");
     startHeroVideo();
     // TODO: consider autoplaying music here
-    // playAudio();
-    setAudioState(false);
+    playAudio();
+    // setAudioState(false);
     // runVhsEffect();
 
     // Hold the nav/chrome back so the circle-reveal plays for a beat and the

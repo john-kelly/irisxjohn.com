@@ -44,6 +44,7 @@ function setThemeColor(color) {
   var path = location.pathname;
   var file = path.slice(path.lastIndexOf("/") + 1) || "index.html";
   if (file === "index.html") {
+    void document.body.offsetHeight;
     return;
   }
 

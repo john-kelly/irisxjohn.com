@@ -92,7 +92,7 @@ if (enterButton) {
     // the reveal is disabled for reduced motion.
     setTimeout(() => {
       document.documentElement.classList.add("chrome-in");
-    }, 2000);
+    }, 1500);
   });
 } else {
   // they loaded a page that wasnt the enter page

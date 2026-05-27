@@ -41,6 +41,13 @@ async function playAudio() {
 // trick Safari into re-reading the color on every page. Other browsers
 // (mobile + desktop) just pick up the meta tag.
 function setThemeColor(color) {
+  var path = location.pathname;
+  var file = path.slice(path.lastIndexOf("/") + 1) || "index.html";
+  if (file === "index.html") {
+    return;
+  }
+
+
   // 1. html + body backgrounds (iOS samples the body bg for the URL bar).
   document.documentElement.style.backgroundColor = color;
   document.body.style.backgroundColor = color;

@@ -44,17 +44,28 @@ body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  overflow: hidden;
+  /*overflow: hidden;*/
+  overflow-y: auto;
   background: var(--ink);
 }
 
 /* iOS 26 Safari samples body background-color for the URL bar tint. */
-.page--hero { background: #000; }
+.page--hero { background: transparent; }
 .page--story { background: var(--red); }
 .page--details { background: var(--blue); }
 .page--registry { background: var(--green); }
 .page--rsvp { background: var(--burgundy); }
 .page--photos { background: var(--green); }
+
+/*NOTE: had to move these to scense bc of htmx...?*/
+/*i added overflow to body for now........*/
+/* Details events ----------------------------------------------------- */
+/* The two-day layout is taller than the viewport on smaller screens, so
+   the details page scrolls (other pages keep the global overflow:hidden). */
+/*.page--details { overflow-y: auto; }*/
+/* The RSVP form can grow past the viewport once an invitation is open, so let
+   this page scroll (other pages keep the global overflow:hidden). */
+/*.page--rsvp { overflow-y: auto; }*/
 
 /* The hero doubles as the "enter" gate: before entering, a black veil hides
    the video and the title, and the button shows. Entering fades the veil out,
@@ -276,10 +287,6 @@ html:not(.entered) .hero-name {
 .scene--registry { background: var(--green); color: #0a0a0a; }
 .scene--rsvp { background: var(--burgundy); color: var(--cream); }
 
-/* The RSVP form can grow past the viewport once an invitation is open, so let
-   this page scroll (other pages keep the global overflow:hidden). */
-.page--rsvp { overflow-y: auto; }
-
 .panel-inner {
   width: min(1100px, 100%);
   margin: 0 auto;
@@ -350,11 +357,6 @@ html:not(.entered) .hero-name {
   font-size: clamp(1.05rem, 1.7vw, 1.35rem);
   line-height: 1.45;
 }
-
-/* Details events ----------------------------------------------------- */
-/* The two-day layout is taller than the viewport on smaller screens, so
-   the details page scrolls (other pages keep the global overflow:hidden). */
-.page--details { overflow-y: auto; }
 
 .events {
   display: grid;

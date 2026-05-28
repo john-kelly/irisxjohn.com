@@ -738,7 +738,7 @@ html:not(.entered) .hero-name {
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     /*border: 1px solid rgba(255, 255, 255, 0.45);*/
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
 /*    box-shadow:
       0 16px 40px rgba(0, 0, 0, 0.28),
       0 4px 12px rgba(0, 0, 0, 0.16),
@@ -774,7 +774,7 @@ html:not(.entered) .hero-name {
     border: 0;
     border-radius: 14px;
     background: transparent;
-    color: #3838ff;
+    color: black;
     font: inherit;
     font-size: 1.05rem;
     text-align: right;
@@ -806,9 +806,9 @@ html:not(.entered) .hero-name {
     padding: 13px 26px;
     border-radius: 999px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
-    backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(2px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
     /*border: none;*/
     color: #000;
     font: inherit;

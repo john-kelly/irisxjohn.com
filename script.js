@@ -89,10 +89,9 @@ function setThemeColor(color) {
   removeShim("shim-bottom");
 }
 
-// Per-page colors, matching the .page--X backgrounds in CSS. The hero body
-// is transparent (the video shows through), so it gets a black tint.
+// Per-page colors, matching the .page--X backgrounds in CSS.
 var THEME_COLORS = {
-  "index.html": "black",       // .page--hero (black)
+  "index.html": "black",      // .page--hero     -> black
   "story.html": "#c11618",    // .page--story    -> var(--red)
   "details.html": "#0076d0",  // .page--details  -> var(--blue)
   "registry.html": "#0d6638", // .page--registry -> var(--green)

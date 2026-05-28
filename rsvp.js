@@ -11,6 +11,7 @@
   // --------------------------------------------------------------------------
 
   const searchInput = document.querySelector("#rsvpSearchInput");
+  const searchForm = document.querySelector("#rsvpSearchForm");
   const resultsList = document.querySelector("#rsvpResults");
   const searchHint = document.querySelector("#rsvpHint");
   const inviteForm = document.querySelector("#rsvpInvite");
@@ -73,11 +74,7 @@
   // instantly when we have them; otherwise re-run the search.
   searchInput.addEventListener("focus", function () {
     if (searchInput.value.trim().length < 2) return;
-    if (results.length) {
-      renderResults();
-    } else {
-      runSearch(searchInput.value);
-    }
+    runSearch(searchInput.value);
   });
 
   searchInput.addEventListener("keydown", function (event) {
@@ -88,13 +85,19 @@
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       moveActive(-1);
-    } else if (event.key === "Enter") {
-      if (activeIndex >= 0 && results[activeIndex]) {
-        event.preventDefault();
-        chooseResult(results[activeIndex]);
-      }
     } else if (event.key === "Escape") {
       closeResults();
+    }
+  });
+
+  // Submitting the search form picks the highlighted result. This is what makes
+  // the iOS keyboard's "go" key work — it fires a native form submit rather than
+  // a keydown we can catch. Desktop Enter implicitly submits here too. Always
+  // preventDefault so the page never reloads.
+  searchForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    if (activeIndex >= 0 && results[activeIndex]) {
+      chooseResult(results[activeIndex]);
     }
   });
 
@@ -180,6 +183,7 @@
 
   async function chooseResult(row) {
     closeResults();
+    // searchInput.value = "";
     searchInput.value = row.full_name;
     setHint("Loading your invitation…");
     try {

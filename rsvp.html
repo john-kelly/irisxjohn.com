@@ -34,7 +34,7 @@
 
         <!-- Step 1 — find your invitation -->
         <div class="rsvp-search" id="rsvpSearch">
-          <div class="rsvp-combo">
+          <form class="rsvp-combo" id="rsvpSearchForm" role="search" hx-boost="false" action="rsvp.html">
             <input
               id="rsvpSearchInput"
               class="rsvp-input"
@@ -42,13 +42,14 @@
               autocomplete="off"
               autocapitalize="words"
               spellcheck="false"
+              enterkeyhint="go"
               placeholder="Start typing your name…"
               role="combobox"
               aria-expanded="false"
               aria-autocomplete="list"
               aria-controls="rsvpResults">
             <ul class="rsvp-results" id="rsvpResults" role="listbox" hidden></ul>
-          </div>
+          </form>
           <p class="rsvp-hint" id="rsvpHint" role="status" aria-live="polite"></p>
         </div>
 

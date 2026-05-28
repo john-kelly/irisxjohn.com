@@ -15,7 +15,6 @@ function bindMobileMenu() {
     toggle.setAttribute("aria-expanded", String(open));
   });
 }
-bindMobileMenu();
 
 // Audio ----------------------------------------------------------------
 function setAudioState(isPlaying) {
@@ -179,16 +178,17 @@ if (!window.__themeColorBound) {
     resumeAudioIfWanted();
   });
 
-  document.addEventListener("htmx:historyRestore", function () {
-    resumeAudioIfWanted();
-    // NOTE: i think settle runs when restore runs
-    // bindMobileMenu();
-
+  // Close the menu before htmx snapshots the page for history. Otherwise the
+  // cached HTML keeps is-open and back-nav flashes the menu before JS can
+  // strip it.
+  document.addEventListener("htmx:beforeRequest", function () {
     var menu = document.querySelector("#mobileMenu");
     var toggle = document.querySelector("#mobileMenuToggle");
     if (menu) menu.classList.remove("is-open");
     if (toggle) toggle.setAttribute("aria-expanded", "false");
   });
+
+  document.addEventListener("htmx:historyRestore", resumeAudioIfWanted);
 }
 
 // Enter gate (hero page only) ------------------------------------------

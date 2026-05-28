@@ -68,6 +68,18 @@
     runSearch(searchInput.value);
   });
 
+  // Refocusing after a blur should bring the dropdown back, as long as there's
+  // still enough typed to meet the search threshold. Re-render cached matches
+  // instantly when we have them; otherwise re-run the search.
+  searchInput.addEventListener("focus", function () {
+    if (searchInput.value.trim().length < 2) return;
+    if (results.length) {
+      renderResults();
+    } else {
+      runSearch(searchInput.value);
+    }
+  });
+
   searchInput.addEventListener("keydown", function (event) {
     if (resultsList.hidden) return;
     if (event.key === "ArrowDown") {

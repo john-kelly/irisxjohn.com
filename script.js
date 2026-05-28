@@ -151,6 +151,7 @@ if (!window.__themeColorBound) {
 
 // Enter gate (hero page only) ------------------------------------------
 var enterButton = document.querySelector("#enterButton");
+var heroScene = document.querySelector(".scene--hero");
 var heroVideo = document.querySelector(".hero-video");
 
 function startHeroVideo() {
@@ -172,7 +173,8 @@ if (enterButton) {
     startHeroVideo();
   }
 
-  enterButton.addEventListener("click", () => {
+  function openHeroGate() {
+    if (document.documentElement.classList.contains("entered")) return;
     // Open the gate now: veil reveals the video, title fades in, button hides.
     // The .hero-name title is already in place and doesn't move.
     document.documentElement.classList.add("entered");
@@ -186,7 +188,12 @@ if (enterButton) {
     setTimeout(() => {
       document.documentElement.classList.add("chrome-in");
     }, 1500);
-  });
+  }
+
+  // Click anywhere on the hero (button included — clicks bubble up here).
+  if (heroScene) {
+    heroScene.addEventListener("click", openHeroGate)
+  };
 } else {
   // they loaded a page that wasnt the enter page
   sessionStorage.setItem("iris-entered", "1");

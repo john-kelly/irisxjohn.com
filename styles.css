@@ -729,12 +729,12 @@ html:not(.entered) .hero-name {
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     /*border: 1px solid rgba(255, 255, 255, 0.45);*/
-    border: none;
-    box-shadow:
+    border: 1px solid rgba(255, 255, 255, 0.3);
+/*    box-shadow:
       0 16px 40px rgba(0, 0, 0, 0.28),
       0 4px 12px rgba(0, 0, 0, 0.16),
       inset 0 1px 1px rgba(255, 255, 255, 0.7),
-      inset 0 -1px 1px rgba(255, 255, 255, 0.18);
+      inset 0 -1px 1px rgba(255, 255, 255, 0.18);*/
     visibility: hidden;
     opacity: 0;
     transform: translateY(12px) scale(0.94);
@@ -799,8 +799,8 @@ html:not(.entered) .hero-name {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    /*border: 1px solid rgba(255, 255, 255, 0.5);*/
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /*border: none;*/
     color: #000;
     font: inherit;
     font-size: 1.05rem;
@@ -819,12 +819,12 @@ html:not(.entered) .hero-name {
     transform: scale(0.96);
   }
 
-  .mobile-menu.is-open .mm-toggle {
+/*  .mobile-menu.is-open .mm-toggle {
     box-shadow:
       0 4px 14px rgba(0, 0, 0, 0.22),
       inset 0 1px 1px rgba(255, 255, 255, 0.6),
       inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-  }
+  }*/
 
   .mm-toggle-glyph {
     display: inline-block;

@@ -725,7 +725,7 @@ html:not(.entered) .hero-name {
     border-radius: 26px;
     /* Liquid glass: frosted translucent fill with a diagonal specular sheen,
        a bright refractive rim, and a soft floating drop shadow. */
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.22));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06));
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     /*border: 1px solid rgba(255, 255, 255, 0.45);*/
@@ -796,7 +796,7 @@ html:not(.entered) .hero-name {
     position: relative;
     padding: 13px 26px;
     border-radius: 999px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     /*border: 1px solid rgba(255, 255, 255, 0.5);*/

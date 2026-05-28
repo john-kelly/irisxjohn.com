@@ -70,8 +70,7 @@
   });
 
   // Refocusing after a blur should bring the dropdown back, as long as there's
-  // still enough typed to meet the search threshold. Re-render cached matches
-  // instantly when we have them; otherwise re-run the search.
+  // still enough typed to meet the search threshold.
   searchInput.addEventListener("focus", function () {
     if (searchInput.value.trim().length < 2) return;
     runSearch(searchInput.value);
@@ -139,6 +138,11 @@
       li.addEventListener("mouseenter", function () {
         setActive(index);
       });
+      // Cancel the tap's default focus shift so iOS doesn't refocus the input
+      // (and pop the keyboard / reopen the dropdown) when a result is picked.
+      li.addEventListener("mousedown", function (event) {
+        event.preventDefault();
+      });
       li.addEventListener("click", function () {
         chooseResult(row);
       });
@@ -184,8 +188,8 @@
   async function chooseResult(row) {
     closeResults();
     searchInput.blur(); // drop focus so the iOS keyboard dismisses on selection
-    // searchInput.value = "";
-    searchInput.value = row.full_name;
+    searchInput.value = "";
+    // searchInput.value = row.full_name;
     setHint("Loading your invitation…");
     try {
       const { data, error } = await sb.rpc("rsvp_get_invitation", {

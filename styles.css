@@ -803,45 +803,56 @@ html:not(.entered) .hero-name {
 
   .mm-toggle {
     position: relative;
-    padding: 13px 26px;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    padding: 0;
     border-radius: 999px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
     backdrop-filter: blur(0) saturate(140%);
     -webkit-backdrop-filter: blur(24px) saturate(140%);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    /*border: none;*/
     color: #fff;
-    font: inherit;
-    font-size: 1.05rem;
-    font-weight: 700;
-    text-transform: lowercase;
     cursor: pointer;
     pointer-events: auto;
-/*    box-shadow:
-      0 10px 26px rgba(0, 0, 0, 0.26),
-      0 2px 6px rgba(0, 0, 0, 0.18),
-      inset 0 1px 1px rgba(255, 255, 255, 0.75);*/
-    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease;
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .mm-toggle:active {
     transform: scale(0.96);
   }
 
-/*  .mobile-menu.is-open .mm-toggle {
-    box-shadow:
-      0 4px 14px rgba(0, 0, 0, 0.22),
-      inset 0 1px 1px rgba(255, 255, 255, 0.6),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-  }*/
-
-  .mm-toggle-glyph {
-    display: inline-block;
-    margin-right: 4px;
+  /* Hamburger bars: the span is the middle bar, the pseudo-elements the
+     outer two. On open they collapse to center and rotate into an X. */
+  .mm-toggle-bars {
+    position: relative;
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: background 160ms ease;
   }
 
-  .mm-toggle-glyph::before { content: "+"; }
-  .mobile-menu.is-open .mm-toggle-glyph::before { content: "\2212"; }
+  .mm-toggle-bars::before,
+  .mm-toggle-bars::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .mm-toggle-bars::before { transform: translateY(-7px); }
+  .mm-toggle-bars::after  { transform: translateY(7px); }
+
+  .mobile-menu.is-open .mm-toggle-bars { background: transparent; }
+  .mobile-menu.is-open .mm-toggle-bars::before { transform: translateY(0) rotate(45deg); }
+  .mobile-menu.is-open .mm-toggle-bars::after  { transform: translateY(0) rotate(-45deg); }
 
   .scene {
     padding: 80px 22px 130px;

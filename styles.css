@@ -395,8 +395,21 @@ html:not(.entered) .hero-name {
 .events {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(32px, 5vw, 72px);
-  margin-top: clamp(36px, 6vh, 64px);
+  grid-template-rows: repeat(6, auto);
+  column-gap: clamp(32px, 5vw, 72px);
+  row-gap: 0;
+}
+
+.event {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 6;
+}
+
+.event .info {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
 }
 
 .event-day {
@@ -434,7 +447,19 @@ html:not(.entered) .hero-name {
 @media (max-width: 760px) {
   .events {
     grid-template-columns: 1fr;
-    gap: clamp(40px, 8vw, 56px);
+    grid-template-rows: auto;
+    column-gap: 0;
+    row-gap: clamp(40px, 8vw, 56px);
+  }
+
+  .event {
+    display: block;
+    grid-row: auto;
+  }
+
+  .event .info {
+    display: block;
+    grid-row: auto;
   }
 }
 
@@ -770,8 +795,6 @@ html:not(.entered) .hero-name {
 
   .mm-toggle-glyph::before { content: "+"; }
   .mobile-menu.is-open .mm-toggle-glyph::before { content: "\2212"; }
-
-  .info-row { grid-template-columns: 1fr; gap: 4px; }
 
   .scene {
     padding: 80px 22px 130px;

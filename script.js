@@ -55,7 +55,7 @@ function resumeAudioIfWanted() {
       audio.play().catch(() => {});
       setAudioState(true);
     } else {
-      audio.pause().catch(() => {});
+      audio.pause();
       setAudioState(false);
     }
   }, 100);

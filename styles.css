@@ -913,6 +913,18 @@ html:not(.entered) .hero-name {
 /* Search + autocomplete */
 .rsvp-combo { position: relative; }
 
+/* Hidden submit button so iOS Safari's keyboard "go" key submits the search.
+   Safari ignores a display:none submit control, so we move it off-screen
+   instead (and out of flow so it adds no layout space). */
+.rsvp-go {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+}
+
 .rsvp-input {
   width: 100%;
   padding: 12px 4px;

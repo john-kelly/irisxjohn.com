@@ -48,6 +48,9 @@
               aria-expanded="false"
               aria-autocomplete="list"
               aria-controls="rsvpResults">
+            <!-- Off-screen submit control. iOS Safari only fires its keyboard
+                 "go" key when a real submit button exists and isn't display:none. -->
+            <button type="submit" class="rsvp-go" tabindex="-1" aria-hidden="true">Go</button>
             <ul class="rsvp-results" id="rsvpResults" role="listbox" hidden></ul>
           </form>
           <p class="rsvp-hint" id="rsvpHint" role="status" aria-live="polite"></p>

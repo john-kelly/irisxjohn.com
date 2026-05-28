@@ -747,6 +747,9 @@ html:not(.entered) .hero-name {
     align-items: start;
     padding-top: 100px;
   }
+  .rsvp-invite {
+    min-height: 100svh;
+  }
 }
 
 /*not sure what this does...*/
@@ -939,6 +942,7 @@ html:not(.entered) .hero-name {
 /* The pulled-up invitation */
 .rsvp-invite {
   margin-top: clamp(36px, 6vh, 56px);
+  scroll-margin-top: clamp(36px, 6vh, 56px);
 }
 
 .rsvp-invite-title {

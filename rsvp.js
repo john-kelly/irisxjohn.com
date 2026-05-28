@@ -239,7 +239,7 @@
 
     setStatus("");
     inviteForm.hidden = false;
-    inviteForm.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    inviteForm.scrollIntoView({ block: "nearest" });
   }
 
   // ---- Saving --------------------------------------------------------------

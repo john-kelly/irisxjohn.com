@@ -222,7 +222,7 @@ if (enterButton) {
     document.documentElement.classList.add("entered");
     sessionStorage.setItem("iris-entered", "1");
     startHeroVideo();
-    playAudio();
+    // playAudio();  // disabled: don't auto-start music on enter
 
     // Hold the nav/chrome back so the circle-reveal plays for a beat and the
     // video is on screen before the navigation fades in. Skip the wait when

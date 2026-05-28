@@ -48,12 +48,14 @@ function pauseAudio() {
 // "internal pause steps" on detach, so the element stops despite hx-preserve.
 // Resume if the user hadn't actually paused it.
 function resumeAudioIfWanted() {
-  var audio = document.querySelector("#soundtrack");
-  if (!audio) return;
-  if (window.__audioWantsPlay && audio.paused) {
-    audio.play().catch(() => {});
-  }
-  setAudioState(!audio.paused);
+  setTimeout(function() {
+    var audio = document.querySelector("#soundtrack");
+    if (!audio) return;
+    if (window.__audioWantsPlay && audio.paused) {
+      audio.play().catch(() => {});
+    }
+    setAudioState(!audio.paused);
+  }, 100);
 }
 
 // Theme color ----------------------------------------------------------

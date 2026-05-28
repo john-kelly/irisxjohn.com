@@ -229,6 +229,11 @@ if (enterButton) {
     // the reveal is disabled for reduced motion.
     setTimeout(() => {
       document.documentElement.classList.add("chrome-in");
+      
+      setTimeout(() => {
+        var toggle = document.querySelector("#mobileMenuToggle");
+        if (toggle) toggle.click();
+      }, 1500);
     }, 1500);
   }
 

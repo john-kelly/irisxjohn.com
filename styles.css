@@ -750,6 +750,11 @@ html:not(.entered) .hero-name {
   .scene {
     padding: 80px 22px 130px;
   }
+
+  .scene--rsvp {
+    align-items: start;
+    padding-top: 100px;
+  }
 }
 
 /*not sure what this does...*/

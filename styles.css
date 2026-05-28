@@ -283,9 +283,9 @@ html:not(.entered) .hero-name {
 }
 
 /* Panels ---------------------------------------------------------- */
-.scene--story { background: var(--red); color: #0a0a0a; }
-.scene--details { background: var(--blue); color: #0a0a0a; }
-.scene--registry { background: var(--green); color: #0a0a0a; }
+.scene--story { background: var(--red); color: #fff; }
+.scene--details { background: var(--blue); color: #fff; }
+.scene--registry { background: var(--green); color: #fff; }
 .scene--rsvp { background: var(--burgundy); color: var(--cream); }
 
 .panel-inner {
@@ -389,7 +389,7 @@ html:not(.entered) .hero-name {
 .registry-link:hover,
 .registry-link:focus-visible {
   background: #08522c;
-  color: var(--ink);
+  color: #fff;
 }
 
 .events {
@@ -662,9 +662,9 @@ html:not(.entered) .hero-name {
   border-radius: 999px;
   /* Liquid glass: same frosted translucent fill as the mobile menu toggle. */
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  color: #000;
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  color: #fff;
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
@@ -735,8 +735,8 @@ html:not(.entered) .hero-name {
     /* Liquid glass: frosted translucent fill with a diagonal specular sheen,
        a bright refractive rim, and a soft floating drop shadow. */
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06));
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
     /*border: 1px solid rgba(255, 255, 255, 0.45);*/
     border: 0.5px solid rgba(255, 255, 255, 0.3);
 /*    box-shadow:
@@ -774,7 +774,7 @@ html:not(.entered) .hero-name {
     border: 0;
     border-radius: 14px;
     background: transparent;
-    color: black;
+    color: #fff;
     font: inherit;
     font-size: 1.05rem;
     text-align: right;
@@ -792,7 +792,7 @@ html:not(.entered) .hero-name {
   .mm-item.is-active::before {
     content: "\2192";
     margin-right: auto;
-    color: #000;
+    color: #fff;
     font-size: 0.9em;
   }
 
@@ -806,11 +806,11 @@ html:not(.entered) .hero-name {
     padding: 13px 26px;
     border-radius: 999px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08));
-    backdrop-filter: blur(2px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(2px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
     border: 0.5px solid rgba(255, 255, 255, 0.3);
     /*border: none;*/
-    color: #000;
+    color: #fff;
     font: inherit;
     font-size: 1.05rem;
     font-weight: 700;

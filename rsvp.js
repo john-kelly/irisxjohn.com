@@ -121,6 +121,9 @@
         li.appendChild(house);
       }
 
+      li.addEventListener("mouseenter", function () {
+        setActive(index);
+      });
       li.addEventListener("click", function () {
         chooseResult(row);
       });
@@ -129,14 +132,17 @@
 
     resultsList.hidden = false;
     searchInput.setAttribute("aria-expanded", "true");
+
+    // Always keep one row highlighted so Enter has a target to choose.
+    setActive(0);
   }
 
-  function moveActive(delta) {
+  function setActive(index) {
     const rows = resultsList.querySelectorAll(".rsvp-result");
     if (!rows.length) return;
-    activeIndex = (activeIndex + delta + rows.length) % rows.length;
-    rows.forEach(function (row, index) {
-      const on = index === activeIndex;
+    activeIndex = (index + rows.length) % rows.length;
+    rows.forEach(function (row, i) {
+      const on = i === activeIndex;
       row.classList.toggle("is-active", on);
       row.setAttribute("aria-selected", String(on));
       if (on) {
@@ -144,6 +150,10 @@
         row.scrollIntoView({ block: "nearest" });
       }
     });
+  }
+
+  function moveActive(delta) {
+    setActive(activeIndex + delta);
   }
 
   function closeResults() {

@@ -962,10 +962,12 @@ html:not(.entered) .hero-name {
 }
 
 .rsvp-result {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 12px 14px;
+  /* Extra left padding reserves room for the active arrow so text never shifts. */
+  padding: 12px 14px 12px 40px;
   cursor: pointer;
   transition: background 120ms ease, color 120ms ease;
 }
@@ -974,6 +976,19 @@ html:not(.entered) .hero-name {
 .rsvp-result:hover {
   background: var(--burgundy);
   color: var(--cream);
+}
+
+/* Yellow arrow pointing at the currently highlighted row. Same glyph as the
+   mobile menu (\2192). Move `left`/`right` to flip which side it sits on. */
+.rsvp-result.is-active::before {
+  content: "\2192";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 0.95em;
+  line-height: 1;
 }
 
 .rsvp-result-name {

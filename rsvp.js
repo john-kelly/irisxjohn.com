@@ -183,6 +183,7 @@
 
   async function chooseResult(row) {
     closeResults();
+    searchInput.blur(); // drop focus so the iOS keyboard dismisses on selection
     // searchInput.value = "";
     searchInput.value = row.full_name;
     setHint("Loading your invitation…");

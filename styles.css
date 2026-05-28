@@ -355,8 +355,40 @@ html:not(.entered) .hero-name {
   margin: 22px 0 0;
   max-width: 620px;
   font-family: var(--serif-body);
-  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  font-size: clamp(1.45rem, 2vw, 1.5rem);
   line-height: 1.45;
+}
+
+.registry-cta {
+  margin: clamp(28px, 4vh, 40px) 0 0;
+}
+
+.registry-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  border: 1px solid currentColor;
+  color: inherit;
+  font-family: var(--sans);
+  font-size: clamp(0.78rem, 1vw, 0.92rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.registry-link__icon {
+  width: 0.9em;
+  height: 0.9em;
+  flex: none;
+}
+
+.registry-link:hover,
+.registry-link:focus-visible {
+  background: #08522c;
+  color: var(--ink);
 }
 
 .events {

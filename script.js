@@ -51,10 +51,8 @@ function resumeAudioIfWanted() {
   setTimeout(function() {
     var audio = document.querySelector("#soundtrack");
     if (!audio) return;
-    if (window.__audioWantsPlay && audio.paused) {
-      audio.play().catch(() => {});
-    }
-    setAudioState(!audio.paused);
+    if (window.__audioWantsPlay) audio.play().catch(() => {});
+    setAudioState(true);
   }, 100);
 }
 

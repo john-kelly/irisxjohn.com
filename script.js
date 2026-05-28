@@ -26,12 +26,34 @@ function setAudioState(isPlaying) {
 async function playAudio() {
   var audio = document.querySelector("#soundtrack");
   if (!audio) return;
+  window.__audioWantsPlay = true;
   try {
     await audio.play();
     setAudioState(true);
   } catch {
     setAudioState(false);
   }
+}
+
+function pauseAudio() {
+  var audio = document.querySelector("#soundtrack");
+  if (!audio) return;
+  window.__audioWantsPlay = false;
+  audio.pause();
+  setAudioState(false);
+}
+
+// htmx's hx-preserve briefly detaches the <audio> element during body swaps
+// (back/forward history restore + boosted nav). HTML spec runs the media
+// "internal pause steps" on detach, so the element stops despite hx-preserve.
+// Resume if the user hadn't actually paused it.
+function resumeAudioIfWanted() {
+  var audio = document.querySelector("#soundtrack");
+  if (!audio) return;
+  if (window.__audioWantsPlay && audio.paused) {
+    audio.play().catch(() => {});
+  }
+  setAudioState(!audio.paused);
 }
 
 // Theme color ----------------------------------------------------------
@@ -121,8 +143,7 @@ if (!window.__themeColorBound) {
         if (audio.paused) {
           playAudio();
         } else {
-          audio.pause();
-          setAudioState(false);
+          pauseAudio();
         }
       });
     }
@@ -139,14 +160,15 @@ if (!window.__themeColorBound) {
         if (audio.paused) {
           playAudio();
         } else {
-          audio.pause();
-          setAudioState(false);
+          pauseAudio();
         }
       });
     }
 
-    setAudioState(!audio.paused);
+    resumeAudioIfWanted();
   });
+
+  document.addEventListener("htmx:historyRestore", resumeAudioIfWanted);
 }
 
 // Enter gate (hero page only) ------------------------------------------

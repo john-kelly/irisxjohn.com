@@ -51,8 +51,13 @@ function resumeAudioIfWanted() {
   setTimeout(function() {
     var audio = document.querySelector("#soundtrack");
     if (!audio) return;
-    if (window.__audioWantsPlay) audio.play().catch(() => {});
-    setAudioState(true);
+    if (window.__audioWantsPlay) {
+      audio.play().catch(() => {});
+      setAudioState(true);
+    } else {
+      audio.pause().catch(() => {});
+      setAudioState(false);
+    }
   }, 100);
 }
 
@@ -168,7 +173,14 @@ if (!window.__themeColorBound) {
     resumeAudioIfWanted();
   });
 
-  document.addEventListener("htmx:historyRestore", resumeAudioIfWanted);
+  document.addEventListener("htmx:historyRestore", function () {
+    resumeAudioIfWanted();
+
+    var menu = document.querySelector("#mobileMenu");
+    var toggle = document.querySelector("#mobileMenuToggle");
+    if (menu) menu.classList.remove("is-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  });
 }
 
 // Enter gate (hero page only) ------------------------------------------

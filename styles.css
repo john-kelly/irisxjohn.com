@@ -796,10 +796,10 @@ html:not(.entered) .hero-name {
     font-size: 0.9em;
   }
 
-  .mm-item.is-active .mm-label {
+/*  .mm-item.is-active .mm-label {
     text-decoration: underline;
     text-underline-offset: 3px;
-  }
+  }*/
 
   .mm-toggle {
     position: relative;

@@ -244,6 +244,11 @@ button { font: inherit; }
   .hero-veil {
     --hero-reveal: 10%;
   }
+
+  /*NOTE: this is the hack to get bottom of video over the screen.*/
+  .scene--hero {
+    height: calc(100vh + 75px);
+  }
 }
 
 /*@media (prefers-reduced-motion: reduce) {

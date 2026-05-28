@@ -2,16 +2,20 @@
 // solution is to use var or to just make things module based and use the htmx callbacks. this is fine for now.
 
 // Mobile menu ---------------------------------------------------------
-var mobileMenu = document.querySelector("#mobileMenu");
-var mobileMenuToggle = document.querySelector("#mobileMenuToggle");
-
-if (mobileMenuToggle && mobileMenu) {
-  mobileMenuToggle.addEventListener("click", () => {
-    var open = !mobileMenu.classList.contains("is-open");
-    mobileMenu.classList.toggle("is-open", open);
-    mobileMenuToggle.setAttribute("aria-expanded", String(open));
+// Re-bind after every body swap: the toggle has no hx-preserve, so htmx
+// replaces it with a fresh element and the previous listener is on the
+// orphaned node.
+function bindMobileMenu() {
+  var menu = document.querySelector("#mobileMenu");
+  var toggle = document.querySelector("#mobileMenuToggle");
+  if (!menu || !toggle) return;
+  toggle.addEventListener("click", () => {
+    var open = !menu.classList.contains("is-open");
+    menu.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
   });
 }
+bindMobileMenu();
 
 // Audio ----------------------------------------------------------------
 function setAudioState(isPlaying) {
@@ -154,6 +158,7 @@ if (!window.__themeColorBound) {
     }
     setAudioState(!audio.paused);
   })();
+  bindMobileMenu();
 
   document.addEventListener("htmx:afterSettle", function () {
     setThemeColor(pageThemeColor());
@@ -170,11 +175,14 @@ if (!window.__themeColorBound) {
       });
     }
 
+    bindMobileMenu();
     resumeAudioIfWanted();
   });
 
   document.addEventListener("htmx:historyRestore", function () {
     resumeAudioIfWanted();
+    // NOTE: i think settle runs when restore runs
+    // bindMobileMenu();
 
     var menu = document.querySelector("#mobileMenu");
     var toggle = document.querySelector("#mobileMenuToggle");

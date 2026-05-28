@@ -86,7 +86,8 @@ html.entered .enter-button {
    The 600ms opacity transition on each element handles the fade. */
 html:not(.chrome-in) .page--hero .topbar,
 html:not(.chrome-in) .page--hero .mobile-menu,
-html:not(.chrome-in) .page--hero .audio-toggle {
+html:not(.chrome-in) .page--hero .audio-toggle,
+html:not(.chrome-in) .page--hero .mm-toggle {
   opacity: 0;
   pointer-events: none;
 }

@@ -942,8 +942,7 @@ html:not(.entered) .hero-name {
 /* The pulled-up invitation */
 .rsvp-invite {
   margin-top: clamp(36px, 6vh, 56px);
-  /*20px for wiggle room*/
-  scroll-margin-top: calc(clamp(36px, 6vh, 56px) + 20px);
+  scroll-margin-top: 20px;
 }
 
 .rsvp-invite-title {

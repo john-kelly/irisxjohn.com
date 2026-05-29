@@ -176,6 +176,9 @@ if (!window.__themeColorBound) {
 
     bindMobileMenu();
     resumeAudioIfWanted();
+
+    var isHero = document.querySelector(".scene--hero");
+    if (isHero) openMenu();
   });
 
   // Close the menu before htmx snapshots the page for history. Otherwise the
@@ -204,6 +207,14 @@ function startHeroVideo() {
   if (playing && playing.catch) playing.catch(() => {});
 }
 
+function openMenu() {
+  var menu = document.querySelector("#mobileMenu");
+  var toggle = document.querySelector("#mobileMenuToggle");
+  if (!menu || !toggle) return;
+  menu.classList.toggle("is-open", true);
+  toggle.setAttribute("aria-expanded", String(true));
+}
+
 if (enterButton) {
   // Returning visitor who already entered (e.g. navigated back here from
   // another page): reveal immediately and start the video on load.
@@ -213,6 +224,7 @@ if (enterButton) {
     // that head script already added these classes.
     document.documentElement.classList.add("entered", "chrome-in");
     startHeroVideo();
+    openMenu();
   }
 
   function openHeroGate() {
@@ -229,11 +241,7 @@ if (enterButton) {
     // the reveal is disabled for reduced motion.
     setTimeout(() => {
       document.documentElement.classList.add("chrome-in");
-      
-      setTimeout(() => {
-        var toggle = document.querySelector("#mobileMenuToggle");
-        if (toggle) toggle.click();
-      }, 1500);
+      openMenu();
     }, 1500);
   }
 

@@ -6,6 +6,17 @@
   font-display: swap;
 }
 
+/* Prevent accidental double-tap zoom on app-like interactive controls while preserving pinch zoom. */
+button,
+a,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+summary {
+  touch-action: manipulation;
+}
+
 @view-transition {
   navigation: auto;
 }

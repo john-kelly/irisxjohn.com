@@ -202,14 +202,14 @@ var heroVideo = document.querySelector(".hero-video");
 // hack bc we setup htmx bad.
 // added document bc just body wasnt working? idk if bc of cache...?
 if (heroScene) {
-  document.body.style.overflowY = 'hidden';
-  document.documentElement.style.overflowY = 'hidden';
-  heroScene.style.overflowY = 'hidden';
-  heroVideo.style.overflowY = 'hidden';
+  document.body.style.setProperty('overflow-y', 'hidden');
+  document.documentElement.style.setProperty('overflow-y', 'hidden');
+  heroScene.style.setProperty('overflow-y', 'hidden');
+  heroVideo.style.setProperty('overflow-y', 'hidden');
   void document.body.offsetHeight;
 } else {
-  document.body.style.overflowY = 'auto';
-  document.documentElement.style.overflowY = 'auto';
+  document.body.style.setProperty('overflow-y', 'auto');
+  document.documentElement.style.setProperty('overflow-y', 'auto');
   void document.body.offsetHeight;
 }
 

@@ -68,6 +68,7 @@ SHAPE_OVERRIDES = {
     "IMG_6703_1.JPG": "rect-tall",
     "IMG_5714_1.JPG": "rect-tall",
     "IMG_5187.jpeg": "rect-tall",
+    "EC147C2E-7EEF-438D-9EDC-B727C1CE8B38-preview.jpeg": "rect-tall",
 }
 assert all(v in SHAPES for v in SHAPE_OVERRIDES.values()), "bad shape in SHAPE_OVERRIDES"
 

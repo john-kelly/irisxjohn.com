@@ -488,7 +488,7 @@ html:not(.entered) .hero-name {
 .gallery-track {
   display: flex;
   align-items: center;
-  gap: clamp(36px, 4vw, 72px);
+  gap: clamp(6px, 0.8vw, 16px);
   height: 100vh;
   height: 100dvh;
   padding: 0 clamp(40px, 5vw, 80px);
@@ -504,31 +504,39 @@ html:not(.entered) .hero-name {
 
 .gallery-item,
 .gallery-sticker {
+  position: relative;
   flex: 0 0 auto;
 }
 
-.gallery-track > *:nth-child(9n+1) { transform: rotate(-2deg); }
-.gallery-track > *:nth-child(9n+2) { transform: rotate(3deg); }
-.gallery-track > *:nth-child(9n+3) { transform: rotate(-1deg); }
-.gallery-track > *:nth-child(9n+4) { transform: rotate(2deg); }
-.gallery-track > *:nth-child(9n+5) { transform: rotate(-3deg); }
-.gallery-track > *:nth-child(9n+6) { transform: rotate(1.5deg); }
-.gallery-track > *:nth-child(9n+7) { transform: rotate(-2.5deg); }
-.gallery-track > *:nth-child(9n+8) { transform: rotate(4deg); }
-.gallery-track > *:nth-child(9n+9) { transform: rotate(-1.5deg); }
+/* Per-frame rotation, scatter and overlap come from inline custom properties
+   set on each <figure> (see photos.html), so the duplicated half of the
+   marquee matches exactly and the loop stays seamless no matter how many
+   photos there are. Mobile overrides the transform to scatter side to side. */
+.gallery-track > * {
+  margin-left: var(--ml, 0px);
+  transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg));
+}
+
+.gallery-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
 
 .gallery-item {
   position: relative;
   overflow: hidden;
   background: transparent;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
 }
 
 .gallery-item .photo {
+  display: block;
   width: 100%;
   height: 100%;
-  background-color: transparent;
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
+  object-position: center;
 }
 
 .gallery-sticker {
@@ -599,6 +607,78 @@ html:not(.entered) .hero-name {
   height: clamp(340px, 64vh, 580px);
   border: clamp(8px, 0.9vw, 14px) solid var(--burgundy);
   border-radius: 50%;
+}
+
+/* Shaped frames build their "border" from padding + a coloured background
+   that shows through around the clipped photo. Clip kills box-shadow, so
+   depth comes from a drop-shadow filter instead. */
+.gallery-item--heart,
+.gallery-item--arch,
+.gallery-item--diamond,
+.gallery-item--hexagon {
+  overflow: visible;
+  box-shadow: none;
+  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.4));
+}
+
+.gallery-item--heart {
+  width: clamp(300px, 32vw, 500px);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  padding: clamp(12px, 1.3vw, 22px);
+  background: var(--red);
+  clip-path: url(#clip-heart);
+}
+.gallery-item--heart .photo { clip-path: url(#clip-heart); }
+
+.gallery-item--arch {
+  width: clamp(240px, 26vw, 400px);
+  height: clamp(340px, 66vh, 560px);
+  padding: clamp(12px, 1.3vw, 20px);
+  background: var(--cream);
+  clip-path: url(#clip-arch);
+}
+.gallery-item--arch .photo { clip-path: url(#clip-arch); }
+
+.gallery-item--diamond {
+  width: clamp(300px, 30vw, 460px);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  padding: clamp(14px, 1.5vw, 24px);
+  background: var(--blue);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+.gallery-item--diamond .photo { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+
+.gallery-item--hexagon {
+  width: clamp(300px, 32vw, 480px);
+  height: clamp(320px, 60vh, 520px);
+  padding: clamp(12px, 1.3vw, 22px);
+  background: var(--gold);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+.gallery-item--hexagon .photo { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
+
+/* Ornate gilded "museum" frame: a gold gradient border with a beveled
+   burgundy inner/outer rule and a thin gold liner against the photo. */
+.gallery-item--regal {
+  width: clamp(240px, 28vw, 420px);
+  height: clamp(320px, 64vh, 560px);
+  border: clamp(18px, 2vw, 34px) solid var(--gold);
+  border-image: linear-gradient(135deg, #fff3b0 0%, #e6b32a 22%, #9c7410 48%, #ffe784 68%, #c79a16 100%) 1;
+  box-shadow:
+    0 0 0 3px var(--burgundy),
+    inset 0 0 0 3px var(--burgundy),
+    inset 0 0 16px rgba(0, 0, 0, 0.4),
+    0 22px 46px rgba(0, 0, 0, 0.42);
+}
+
+.gallery-item--regal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(255, 231, 132, 0.85);
+  pointer-events: none;
 }
 
 /* Floating Photos trigger (desktop) ----------------------------------- */
@@ -727,6 +807,48 @@ html:not(.entered) .hero-name {
   .topbar { display: none; }
   .gallery-trigger { display: none; }
   .gallery-close { display: none; }
+
+  /* Photos: stack vertically and scroll the page instead of the desktop
+     horizontal marquee. */
+  .scene--photos {
+    height: auto;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  .gallery-track {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    gap: clamp(30px, 8vw, 52px);
+    padding: clamp(84px, 20vw, 120px) 0 clamp(120px, 32vw, 168px);
+    animation: none;
+  }
+
+  /* The duplicated half only exists to make the desktop loop seamless. */
+  .gallery-track > [aria-hidden="true"] { display: none; }
+
+  /* Drop the horizontal overlap and scatter side to side instead of up/down
+     (a vertical nudge would just get clipped by the stack). */
+  .gallery-track > * {
+    margin-left: 0;
+    transform: translateX(var(--mx, 0px)) rotate(var(--rot, 0deg));
+  }
+
+  /* One screen-fitting width; each shape's aspect-ratio sets the height. */
+  .gallery-item {
+    width: min(80vw, 420px);
+    height: auto;
+  }
+  .gallery-item--rect-tall,
+  .gallery-item--oval-tall,
+  .gallery-item--arch,
+  .gallery-item--regal,
+  .gallery-item--rect { aspect-ratio: 3 / 4; }
+  .gallery-item--oval-wide { aspect-ratio: 5 / 4; }
+  .gallery-item--hexagon { aspect-ratio: 4 / 3; }
+  /* circle, heart and diamond are already 1 / 1 */
 
   .mobile-menu {
     position: fixed;

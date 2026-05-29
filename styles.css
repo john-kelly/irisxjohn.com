@@ -33,11 +33,20 @@ summary {
   --ink: #0a0a0a;
   --cream: #f5f1e8;
   --gold: #ffd43a;
-  --red: #c11618;
-  --blue: #0076d0;
-  --green: #0d6638;
-  --fuchsia: #d11f8a;
-  --burgundy: #6b1018;
+
+  /* Page background colors — one per main page. */
+  --story: #484554;
+  --details: #0d6638;
+  --faq: #25536b;        
+  --rsvp: #6b1018;
+  --registry: #6a5ee4;
+  --registry-hover: #5349b2;
+
+  /* Fixed decorative accents for the story gallery marquee (kept independent
+     of the page colors above). */
+  --red: #c11618;            /* the big "&" sticker */
+  --burgundy: #6b1018;       /* the floating Photos button */
+
   --sans: Helveesti, "Helvetica Neue", Arial, sans-serif;
   --serif: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --serif-body: "EB Garamond", "Iowan Old Style", Georgia, serif;
@@ -63,11 +72,11 @@ body {
 
 /* iOS 26 Safari samples body background-color for the URL bar tint. */
 .page--hero { background: black; }
-.page--story { background: var(--fuchsia); }
-.page--details { background: var(--blue); }
-.page--registry { background: var(--green); }
-.page--rsvp { background: var(--burgundy); }
-.page--faq { background: var(--red); }
+.page--story { background: var(--story); }
+.page--details { background: var(--details); }
+.page--registry { background: var(--registry); }
+.page--rsvp { background: var(--rsvp); }
+.page--faq { background: var(--faq); }
 
 /*NOTE: had to move these to scense bc of htmx...?*/
 /*i added overflow to body for now........*/
@@ -306,9 +315,9 @@ html:not(.entered) .hero-name {
 }
 
 /* Panels ---------------------------------------------------------- */
-.scene--details { background: var(--blue); color: #fff; }
-.scene--registry { background: var(--green); color: #fff; }
-.scene--rsvp { background: var(--burgundy); color: var(--cream); }
+.scene--details { background: var(--details); color: #fff; }
+.scene--registry { background: var(--registry); color: #fff; }
+.scene--rsvp { background: var(--rsvp); color: var(--cream); }
 
 .panel-inner {
   width: min(1100px, 100%);
@@ -410,7 +419,7 @@ html:not(.entered) .hero-name {
 
 .registry-link:hover,
 .registry-link:focus-visible {
-  background: #08522c;
+  background: var(--registry-hover);
   color: #fff;
 }
 
@@ -489,7 +498,7 @@ html:not(.entered) .hero-name {
 /* Long, scrollable page (like details/rsvp), so it pins to the top of the
    scene rather than vertically centering. */
 .scene--faq {
-  background: var(--red);
+  background: var(--faq);
   color: var(--cream);
   align-items: start;
 }
@@ -644,7 +653,7 @@ html:not(.entered) .hero-name {
 
 /* Gallery / Photos scene --------------------------------------------- */
 .scene--story {
-  background: var(--fuchsia);
+  background: var(--story);
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -1363,7 +1372,7 @@ html:not(.entered) .hero-name {
 
 .rsvp-result.is-active,
 .rsvp-result:hover {
-  background: var(--burgundy);
+  background: var(--rsvp);
   color: var(--cream);
 }
 

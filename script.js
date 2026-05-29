@@ -122,11 +122,11 @@ function setThemeColor(color) {
 // Per-page colors, matching the .page--X backgrounds in CSS.
 var THEME_COLORS = {
   "index.html": "black",      // .page--hero     -> black
-  "story.html": "#d11f8a",    // .page--story    -> var(--fuchsia)
-  "details.html": "#0076d0",  // .page--details  -> var(--blue)
-  "registry.html": "#0d6638", // .page--registry -> var(--green)
-  "rsvp.html": "#6b1018",     // .page--rsvp     -> var(--burgundy)
-  "faq.html": "#c11618",      // .page--faq      -> var(--red)
+  "story.html": "#484554",    // .page--story    -> var(--story)
+  "details.html": "#0d6638",  // .page--details  -> var(--details)
+  "registry.html": "#6a5ee4", // .page--registry -> var(--registry)
+  "rsvp.html": "#6b1018",     // .page--rsvp     -> var(--rsvp)
+  "faq.html": "#25536b",      // .page--faq      -> var(--faq)
 };
 
 function pageThemeColor() {

@@ -203,7 +203,7 @@ var heroVideo = document.querySelector(".hero-video");
 // added document bc just body wasnt working? idk if bc of cache...?
 if (heroScene) {
   document.body.style.overflowY = 'hidden';
-  document.documentElement.style.overflowY = 'auto';
+  document.documentElement.style.overflowY = 'hidden';
 } else {
   document.body.style.overflowY = 'auto';
   document.documentElement.style.overflowY = 'auto';

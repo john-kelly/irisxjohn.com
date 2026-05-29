@@ -494,7 +494,8 @@ html:not(.entered) .hero-name {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: clamp(20px, 4.5vh, 56px);
+  /* Lifted to clear the smaller coda line that sits in the band beneath it. */
+  bottom: calc(clamp(20px, 4.5vh, 56px) + 1.2 * clamp(1rem, 1.6vw, 1.45rem) + 0.55rem);
   z-index: 35; /* above the photos (which cap at 30), below the UI chrome (40) */
   margin: 0;
   text-align: center;
@@ -515,9 +516,34 @@ html:not(.entered) .hero-name {
   font-weight: 400;
 }
 
-/* Closing line — only shown at the bottom of the mobile stacked feed
-   (see the mobile block); hidden on the desktop marquee. */
+/* Closing line. On desktop it tucks into the green band just below the quote
+   in a smaller, lighter face; on mobile it rides at the top of the stacked feed
+   under the opening tagline (see the mobile block). */
 .story-coda {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(20px, 4.5vh, 56px);
+  z-index: 35;
+  margin: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.story-coda-text {
+  margin: 0 auto;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1rem, 1.6vw, 1.45rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+/* Sign-off at the very end of the mobile photo feed; the desktop marquee loops
+   endlessly so there's no "end" to cap (shown in the mobile block). */
+.story-cheers {
   display: none;
 }
 
@@ -789,20 +815,43 @@ html:not(.entered) .hero-name {
   }
 
   .gallery-track {
+    order: 1; /* drops below the tagline + coda header block */
     flex-direction: column;
     align-items: center;
     width: 100%;
     height: auto;
     gap: 0;
-    padding: clamp(28px, 9vw, 56px) 0 clamp(48px, 14vw, 88px);
+    padding: clamp(20px, 6vw, 36px) 0 clamp(24px, 8vw, 44px);
     animation: none;
   }
 
-  /* Closes the mobile feed beneath the last photo. */
-  .story-coda {
+  /* Sign-off that closes the bottom of the feed. */
+  .story-cheers {
+    order: 2;
     display: block;
-    padding: 0 clamp(20px, 6vw, 32px) clamp(56px, 16vw, 96px);
+    padding: 0 clamp(20px, 6vw, 32px) clamp(48px, 15vw, 88px);
     text-align: center;
+  }
+
+  .story-cheers-text {
+    margin: 0 auto;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    color: var(--cream);
+  }
+
+  /* Rides at the top of the feed, just under the opening tagline (pulled above
+     the photos with flex order), instead of the desktop band. */
+  .story-coda {
+    order: 0;
+    position: static;
+    display: block;
+    padding: 0 clamp(20px, 6vw, 32px);
+    text-align: center;
+    pointer-events: auto;
   }
 
   .story-coda-text {
@@ -814,6 +863,7 @@ html:not(.entered) .hero-name {
     line-height: 1.12;
     letter-spacing: -0.01em;
     color: var(--cream);
+    white-space: normal;
   }
 
   /* The duplicated half only exists to make the desktop loop seamless. */

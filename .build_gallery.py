@@ -7,6 +7,8 @@ left untouched. Each photo on disk yields exactly one visible <figure> plus one 
 loop duplicate, so the two marquee halves always match and the scroll stays
 seamless. The photo ORDER is reshuffled randomly on every run — re-running
 without adding photos will still reorder the gallery (and produce a git diff).
+A few photos are pinned and survive the shuffle: see FIRST_PHOTO, LAST_PHOTO
+and SHAPE_OVERRIDES below.
 
 Add new photos to optimized-photos/ and re-run:  python3 .build_gallery.py
 """
@@ -40,16 +42,48 @@ DX = [1, -3, 4, -5, 2, -4, 3, -2, 5, -3]                 # vw (desktop x jitter)
 MX = [-9, 7, -4, 10, -6, 8, -3, 5]                       # vw (mobile x scatter)
 ML = [0, -46, 0, -30, 0, 0, -58, 0, -24, -38, 0]         # px (overlap pull)
 
+# --- Pinned overrides (these survive the random shuffle) ---------------------
+# Favourite shots that should always land in a fixed spot. Set to None to
+# disable. Names must match the file in optimized-photos/ exactly; a pin naming
+# a file that isn't there is reported and ignored.
+FIRST_PHOTO = "IMG_5705_1.JPG"   # always the first figure
+LAST_PHOTO = "IMG_1170.jpeg"     # always the last figure
+
+# Force specific photos to a given shape, regardless of their position. Each
+# value must be one of SHAPES.
+SHAPE_OVERRIDES = {
+    "DSCF4044_1.JPG": "rect-wide",
+}
+assert all(v in SHAPES for v in SHAPE_OVERRIDES.values()), "bad shape in SHAPE_OVERRIDES"
+
 
 def fmt(n):
     return str(int(n)) if float(n).is_integer() else str(n)
 
 
+def pin_order(files):
+    """Move FIRST_PHOTO to the front and LAST_PHOTO to the end, leaving the
+    rest of the shuffled order untouched. Pins naming a missing file are
+    reported and skipped so the build never silently drops a photo."""
+    files = list(files)
+    for label, name in (("FIRST_PHOTO", FIRST_PHOTO), ("LAST_PHOTO", LAST_PHOTO),
+                        *(("SHAPE_OVERRIDES", n) for n in SHAPE_OVERRIDES)):
+        if name and name not in files:
+            print(f"  warning: {label} {name!r} not in optimized-photos/ — ignored")
+    if FIRST_PHOTO in files:
+        files.remove(FIRST_PHOTO)
+        files.insert(0, FIRST_PHOTO)
+    if LAST_PHOTO in files:
+        files.remove(LAST_PHOTO)
+        files.append(LAST_PHOTO)
+    return files
+
+
 def build_figures(files):
-    """One (shape, style, src) tuple per photo, in deterministic order."""
+    """One (shape, style, src) tuple per photo, in the given order."""
     figures = []
     for i, name in enumerate(files):
-        shape = SHAPES[i % len(SHAPES)]
+        shape = SHAPE_OVERRIDES.get(name, SHAPES[i % len(SHAPES)])
         rot = ROT[i % len(ROT)]
         dx = DX[i % len(DX)]
         mx = MX[i % len(MX)]
@@ -83,8 +117,10 @@ def main():
     if not files:
         raise SystemExit(f"No photos found in {PHOTO_DIR}")
     # Fresh random shuffle each run, so near-sequential shots aren't adjacent
-    # and the arrangement changes every time the gallery is regenerated.
+    # and the arrangement changes every time the gallery is regenerated...
     random.shuffle(files)
+    # ...then re-pin the favourites so they always keep their spot.
+    files = pin_order(files)
 
     figures = build_figures(files)
     inner = render(figures, False) + "\n\n" + render(figures, True)

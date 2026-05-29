@@ -53,6 +53,16 @@ LAST_PHOTO = "IMG_1170.jpeg"     # always the last figure
 # value must be one of SHAPES.
 SHAPE_OVERRIDES = {
     "DSCF4044_1.JPG": "rect-wide",
+    "IMG_7081.JPG": "rect-wide",
+    "000140260012_2.jpeg": "rect-wide",
+    "IMG_2749_2.jpeg": "rect-wide",
+    "DSCF4050.JPG": "rect-wide",
+    "DSCF3649_1.JPG": "rect-wide",
+    "IMG_6044.jpg": "rect-tall",
+    "IMG_7398.JPEG": "rect-tall",
+    "IMG_6703_1.JPG": "rect-tall",
+    "IMG_5714_1.JPG": "rect-tall",
+    "IMG_5187.jpeg": "rect-tall",
 }
 assert all(v in SHAPES for v in SHAPE_OVERRIDES.values()), "bad shape in SHAPE_OVERRIDES"
 

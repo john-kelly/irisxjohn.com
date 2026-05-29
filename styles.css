@@ -259,6 +259,12 @@ button { font: inherit; }
   .scene--hero {
     height: calc(100vh + 75px);
   }
+
+  /* Lift the title higher so the bottom-right menu (which expands upward
+     when opened) can't overlap it on short screens. */
+  .hero-inner {
+    transform: translateY(-12vh);
+  }
 }
 
 /*@media (prefers-reduced-motion: reduce) {

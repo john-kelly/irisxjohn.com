@@ -205,6 +205,7 @@ if (heroScene) {
   document.body.style.overflowY = 'hidden';
   document.documentElement.style.overflowY = 'hidden';
   heroScene.style.overflowY = 'hidden';
+  heroVideo.style.overflowY = 'hidden';
 } else {
   document.body.style.overflowY = 'auto';
   document.documentElement.style.overflowY = 'auto';

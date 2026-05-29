@@ -546,13 +546,6 @@ html:not(.entered) .hero-name {
 
 .faq-q::-webkit-details-marker { display: none; }
 
-.faq-item[open] > .faq-q,
-.faq-q:hover,
-.faq-q:focus-visible {
-  color: var(--gold);
-  outline: none;
-}
-
 /* CSS-drawn +/- toggle: a horizontal bar always shows; the vertical bar
    collapses when the item is open, turning the plus into a minus. */
 .faq-q-mark {

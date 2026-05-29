@@ -198,6 +198,7 @@ if (!window.__themeColorBound) {
 var enterButton = document.querySelector("#enterButton");
 var heroScene = document.querySelector(".scene--hero");
 var heroVideo = document.querySelector(".hero-video");
+var heroVeil = document.querySelector(".hero-veil");
 
 // hack bc we setup htmx bad.
 // added document bc just body wasnt working? idk if bc of cache...?
@@ -206,6 +207,7 @@ if (heroScene) {
   document.documentElement.style.setProperty('overflow-y', 'hidden');
   heroScene.style.setProperty('overflow-y', 'hidden');
   heroVideo.style.setProperty('overflow-y', 'hidden');
+  heroVeil.style.setProperty('overflow-y', 'hidden');
   void document.body.offsetHeight;
 } else {
   document.body.style.setProperty('overflow-y', 'auto');

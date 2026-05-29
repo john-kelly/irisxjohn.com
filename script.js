@@ -203,16 +203,9 @@ var heroVeil = document.querySelector(".hero-veil");
 // hack bc we setup htmx bad.
 // added document bc just body wasnt working? idk if bc of cache...?
 if (heroScene) {
-  document.body.style.setProperty('overflow-y', 'hidden');
-  document.documentElement.style.setProperty('overflow-y', 'hidden');
-  heroScene.style.setProperty('overflow-y', 'hidden');
-  heroVideo.style.setProperty('overflow-y', 'hidden');
-  heroVeil.style.setProperty('overflow-y', 'hidden');
-  void document.body.offsetHeight;
+  document.body.style.setProperty('overflow', 'hidden');
 } else {
-  document.body.style.setProperty('overflow-y', 'auto');
-  document.documentElement.style.setProperty('overflow-y', 'auto');
-  void document.body.offsetHeight;
+  document.body.style.setProperty('overflow', 'auto');
 }
 
 function startHeroVideo() {

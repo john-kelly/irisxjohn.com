@@ -206,9 +206,11 @@ if (heroScene) {
   document.documentElement.style.overflowY = 'hidden';
   heroScene.style.overflowY = 'hidden';
   heroVideo.style.overflowY = 'hidden';
+  void document.body.offsetHeight;
 } else {
   document.body.style.overflowY = 'auto';
   document.documentElement.style.overflowY = 'auto';
+  void document.body.offsetHeight;
 }
 
 function startHeroVideo() {

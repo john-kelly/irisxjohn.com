@@ -488,7 +488,7 @@ html:not(.entered) .hero-name {
 .gallery-track {
   display: flex;
   align-items: center;
-  gap: clamp(6px, 0.8vw, 16px);
+  gap: clamp(2px, 0.3vw, 7px);
   height: 100vh;
   height: 100dvh;
   padding: 0 clamp(40px, 5vw, 80px);
@@ -513,9 +513,34 @@ html:not(.entered) .hero-name {
    marquee matches exactly and the loop stays seamless no matter how many
    photos there are. Mobile overrides the transform to scatter side to side. */
 .gallery-track > * {
-  margin-left: var(--ml, 0px);
+  /* The per-figure --ml pulls some frames in; the -44px tightens every gap so
+     the whole row reads denser. */
+  margin-left: calc(var(--ml, 0px) - 44px);
   transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg));
 }
+
+/* Scattered stacking order so overlaps don't all layer the same way. The
+   pattern repeats every 19 (a divisor of the 38-photo loop) so each frame and
+   its duplicate share a layer and the marquee stays seamless. */
+.gallery-track > *:nth-child(19n+1)  { z-index: 14; }
+.gallery-track > *:nth-child(19n+2)  { z-index: 3; }
+.gallery-track > *:nth-child(19n+3)  { z-index: 27; }
+.gallery-track > *:nth-child(19n+4)  { z-index: 8; }
+.gallery-track > *:nth-child(19n+5)  { z-index: 19; }
+.gallery-track > *:nth-child(19n+6)  { z-index: 1; }
+.gallery-track > *:nth-child(19n+7)  { z-index: 23; }
+.gallery-track > *:nth-child(19n+8)  { z-index: 11; }
+.gallery-track > *:nth-child(19n+9)  { z-index: 30; }
+.gallery-track > *:nth-child(19n+10) { z-index: 6; }
+.gallery-track > *:nth-child(19n+11) { z-index: 17; }
+.gallery-track > *:nth-child(19n+12) { z-index: 25; }
+.gallery-track > *:nth-child(19n+13) { z-index: 4; }
+.gallery-track > *:nth-child(19n+14) { z-index: 21; }
+.gallery-track > *:nth-child(19n+15) { z-index: 9; }
+.gallery-track > *:nth-child(19n+16) { z-index: 28; }
+.gallery-track > *:nth-child(19n+17) { z-index: 13; }
+.gallery-track > *:nth-child(19n+18) { z-index: 2; }
+.gallery-track > *:nth-child(19n+19) { z-index: 16; }
 
 .gallery-defs {
   position: absolute;
@@ -821,7 +846,7 @@ html:not(.entered) .hero-name {
     align-items: center;
     width: 100%;
     height: auto;
-    gap: clamp(30px, 8vw, 52px);
+    gap: 0;
     padding: clamp(84px, 20vw, 120px) 0 clamp(120px, 32vw, 168px);
     animation: none;
   }
@@ -829,12 +854,14 @@ html:not(.entered) .hero-name {
   /* The duplicated half only exists to make the desktop loop seamless. */
   .gallery-track > [aria-hidden="true"] { display: none; }
 
-  /* Drop the horizontal overlap and scatter side to side instead of up/down
+  /* Overlap the stack into a pile and scatter side to side instead of up/down
      (a vertical nudge would just get clipped by the stack). */
   .gallery-track > * {
     margin-left: 0;
+    margin-top: clamp(-80px, -12vw, -36px);
     transform: translateX(var(--mx, 0px)) rotate(var(--rot, 0deg));
   }
+  .gallery-track > *:first-child { margin-top: 0; }
 
   /* One screen-fitting width; each shape's aspect-ratio sets the height. */
   .gallery-item {

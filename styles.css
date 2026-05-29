@@ -36,6 +36,7 @@ summary {
   --red: #c11618;
   --blue: #0076d0;
   --green: #0d6638;
+  --fuchsia: #d11f8a;
   --burgundy: #6b1018;
   --sans: Helveesti, "Helvetica Neue", Arial, sans-serif;
   --serif: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
@@ -62,7 +63,7 @@ body {
 
 /* iOS 26 Safari samples body background-color for the URL bar tint. */
 .page--hero { background: black; }
-.page--story { background: var(--green); }
+.page--story { background: var(--fuchsia); }
 .page--details { background: var(--blue); }
 .page--registry { background: var(--green); }
 .page--rsvp { background: var(--burgundy); }
@@ -650,7 +651,7 @@ html:not(.entered) .hero-name {
 
 /* Gallery / Photos scene --------------------------------------------- */
 .scene--story {
-  background: var(--green);
+  background: var(--fuchsia);
   padding: 0;
   display: flex;
   flex-direction: column;

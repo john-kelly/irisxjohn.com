@@ -199,6 +199,13 @@ var enterButton = document.querySelector("#enterButton");
 var heroScene = document.querySelector(".scene--hero");
 var heroVideo = document.querySelector(".hero-video");
 
+// hack bc we setup htmx bad.
+if (heroScene) {
+  document.body.style.overflowY = 'hidden';
+} else {
+  document.body.style.overflowY = 'auto';
+}
+
 function startHeroVideo() {
   if (!heroVideo) return;
   // Muted playback is allowed without a user gesture, so this also works

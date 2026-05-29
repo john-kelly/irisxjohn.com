@@ -7,7 +7,7 @@ left untouched. Each photo on disk yields exactly one visible <figure> plus one 
 loop duplicate, so the two marquee halves always match and the scroll stays
 seamless. The photo ORDER is reshuffled randomly on every run — re-running
 without adding photos will still reorder the gallery (and produce a git diff).
-A few photos are pinned and survive the shuffle: see FIRST_PHOTO, LAST_PHOTO
+A few photos are pinned and survive the shuffle: see PINNED_FIRST, LAST_PHOTO
 and SHAPE_OVERRIDES below.
 
 Add new photos to optimized-photos/ and re-run:  python3 .build_gallery.py
@@ -46,7 +46,12 @@ ML = [0, -46, 0, -30, 0, 0, -58, 0, -24, -38, 0]         # px (overlap pull)
 # Favourite shots that should always land in a fixed spot. Set to None to
 # disable. Names must match the file in optimized-photos/ exactly; a pin naming
 # a file that isn't there is reported and ignored.
-FIRST_PHOTO = "IMG_5705_1.JPG"   # always the first figure
+# Photos pinned to the front, in this exact order (first, second, ...).
+# Everything not pinned shuffles into the middle.
+PINNED_FIRST = [
+    "IMG_5705_1.JPG",   # first
+    "IMG_5075_1.JPG",   # second
+]
 LAST_PHOTO = "IMG_1170.jpeg"     # always the last figure
 
 # Force specific photos to a given shape, regardless of their position. Each
@@ -72,17 +77,18 @@ def fmt(n):
 
 
 def pin_order(files):
-    """Move FIRST_PHOTO to the front and LAST_PHOTO to the end, leaving the
-    rest of the shuffled order untouched. Pins naming a missing file are
-    reported and skipped so the build never silently drops a photo."""
+    """Pin PINNED_FIRST to the front (in declared order) and LAST_PHOTO to the
+    end, leaving the rest of the shuffled order untouched. Pins naming a missing
+    file are reported and skipped so the build never silently drops a photo."""
     files = list(files)
-    for label, name in (("FIRST_PHOTO", FIRST_PHOTO), ("LAST_PHOTO", LAST_PHOTO),
-                        *(("SHAPE_OVERRIDES", n) for n in SHAPE_OVERRIDES)):
+    for name in (*PINNED_FIRST, LAST_PHOTO, *SHAPE_OVERRIDES):
         if name and name not in files:
-            print(f"  warning: {label} {name!r} not in optimized-photos/ — ignored")
-    if FIRST_PHOTO in files:
-        files.remove(FIRST_PHOTO)
-        files.insert(0, FIRST_PHOTO)
+            print(f"  warning: pinned photo {name!r} not in optimized-photos/ — ignored")
+    # Front pins: pull out any that are present, then prepend in declared order.
+    front = [p for p in PINNED_FIRST if p in files]
+    for p in front:
+        files.remove(p)
+    files = front + files
     if LAST_PHOTO in files:
         files.remove(LAST_PHOTO)
         files.append(LAST_PHOTO)

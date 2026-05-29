@@ -1046,7 +1046,7 @@ html:not(.entered) .hero-name {
   .mobile-menu.is-open .mm-toggle-bars::after  { transform: translateY(0) rotate(-45deg); }
 
   .scene {
-    padding: 50px 30px 50px;
+    padding: 50px 30px 100px;
   }
 
   .scene--rsvp {

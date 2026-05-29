@@ -515,6 +515,12 @@ html:not(.entered) .hero-name {
   font-weight: 400;
 }
 
+/* Closing line — only shown at the bottom of the mobile stacked feed
+   (see the mobile block); hidden on the desktop marquee. */
+.story-coda {
+  display: none;
+}
+
 .gallery-track {
   display: flex;
   align-items: center;
@@ -545,7 +551,7 @@ html:not(.entered) .hero-name {
 .gallery-track > * {
   /* The per-figure --ml pulls some frames in; the -44px tightens every gap so
      the whole row reads denser. */
-  margin-left: calc(var(--ml, 0px) - 44px);
+  margin-left: 0px;
   transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--rot, 0deg));
 }
 
@@ -788,8 +794,26 @@ html:not(.entered) .hero-name {
     width: 100%;
     height: auto;
     gap: 0;
-    padding: clamp(28px, 9vw, 56px) 0 clamp(120px, 32vw, 168px);
+    padding: clamp(28px, 9vw, 56px) 0 clamp(48px, 14vw, 88px);
     animation: none;
+  }
+
+  /* Closes the mobile feed beneath the last photo. */
+  .story-coda {
+    display: block;
+    padding: 0 clamp(20px, 6vw, 32px) clamp(56px, 16vw, 96px);
+    text-align: center;
+  }
+
+  .story-coda-text {
+    margin: 0 auto;
+    max-width: 22ch;
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(1.3rem, 5vw, 1.9rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--cream);
   }
 
   /* The duplicated half only exists to make the desktop loop seamless. */

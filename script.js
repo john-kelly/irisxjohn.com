@@ -200,10 +200,13 @@ var heroScene = document.querySelector(".scene--hero");
 var heroVideo = document.querySelector(".hero-video");
 
 // hack bc we setup htmx bad.
+// added document bc just body wasnt working? idk if bc of cache...?
 if (heroScene) {
   document.body.style.overflowY = 'hidden';
+  document.documentElement.style.overflowY = 'auto';
 } else {
   document.body.style.overflowY = 'auto';
+  document.documentElement.style.overflowY = 'auto';
 }
 
 function startHeroVideo() {

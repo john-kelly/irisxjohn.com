@@ -261,7 +261,7 @@ button { font: inherit; }
 }
 
 .hero-name {
-  margin: 0 0 50px;
+  margin: 0 0 100px;
   color: var(--cream);
   font-family: var(--serif);
   font-weight: 900;

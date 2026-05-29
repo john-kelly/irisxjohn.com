@@ -826,8 +826,10 @@ html:not(.entered) .hero-name {
   }
 
   .story-quote-text {
-    max-width: 20ch;
-    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    max-width: 30ch;
+    font-size: 2rem;
+    margin-top: 0;
+    text-align: left;
   }
 
   .gallery-track {
@@ -872,14 +874,12 @@ html:not(.entered) .hero-name {
 
   .story-coda-text {
     margin: 0 auto;
-    max-width: 22ch;
+    max-width: 40ch;
     font-family: var(--serif);
-    font-weight: 900;
-    font-size: clamp(1.3rem, 5vw, 1.9rem);
-    line-height: 1.12;
-    letter-spacing: -0.01em;
+    font-size: 1rem;
     color: var(--cream);
     white-space: normal;
+    text-align: left;
   }
 
   /* The duplicated half only exists to make the desktop loop seamless. */
@@ -1046,12 +1046,12 @@ html:not(.entered) .hero-name {
   .mobile-menu.is-open .mm-toggle-bars::after  { transform: translateY(0) rotate(-45deg); }
 
   .scene {
-    padding: 80px 22px 130px;
+    padding: 50px 30px 50px;
   }
 
   .scene--rsvp {
     align-items: start;
-    padding-top: 100px;
+    padding-top: 150px;
   }
   .rsvp-invite {
     min-height: 100svh;

@@ -62,11 +62,10 @@ body {
 
 /* iOS 26 Safari samples body background-color for the URL bar tint. */
 .page--hero { background: black; }
-.page--story { background: var(--red); }
+.page--story { background: var(--green); }
 .page--details { background: var(--blue); }
 .page--registry { background: var(--green); }
 .page--rsvp { background: var(--burgundy); }
-.page--photos { background: var(--green); }
 
 /*NOTE: had to move these to scense bc of htmx...?*/
 /*i added overflow to body for now........*/
@@ -299,7 +298,6 @@ html:not(.entered) .hero-name {
 }
 
 /* Panels ---------------------------------------------------------- */
-.scene--story { background: var(--red); color: #fff; }
 .scene--details { background: var(--blue); color: #fff; }
 .scene--registry { background: var(--green); color: #fff; }
 .scene--rsvp { background: var(--burgundy); color: var(--cream); }
@@ -480,7 +478,7 @@ html:not(.entered) .hero-name {
 }
 
 /* Gallery / Photos scene --------------------------------------------- */
-.scene--photos {
+.scene--story {
   background: var(--green);
   padding: 0;
 }
@@ -493,7 +491,7 @@ html:not(.entered) .hero-name {
   height: 100dvh;
   padding: 0 clamp(40px, 5vw, 80px);
   width: max-content;
-  animation: gallery-scroll 85s linear infinite;
+  animation: gallery-scroll 130s linear infinite;
   will-change: transform;
 }
 
@@ -732,9 +730,9 @@ html:not(.entered) .hero-name {
   .gallery-trigger { display: none; }
   .gallery-close { display: none; }
 
-  /* Photos: stack vertically and scroll the page instead of the desktop
+  /* Story gallery: stack vertically and scroll the page instead of the desktop
      horizontal marquee. */
-  .scene--photos {
+  .scene--story {
     height: auto;
     min-height: 100dvh;
     overflow-x: clip;

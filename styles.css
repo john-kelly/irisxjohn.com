@@ -248,7 +248,6 @@ button { font: inherit; }
   /*NOTE: this is the hack to get bottom of video over the screen.*/
   .scene--hero {
     height: calc(100vh + 75px);
-    /*overflow-y: hidden;*/
   }
 }
 

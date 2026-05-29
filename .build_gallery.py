@@ -16,18 +16,12 @@ HTML = os.path.join(ROOT, "photos.html")
 
 EXTS = (".jpg", ".jpeg", ".png", ".webp")
 
-# Frame shapes, cycled across the photos.
-SHAPES = [
-    "rect-tall", "heart", "oval-wide", "diamond", "regal",
-    "circle", "arch", "rect", "hexagon", "oval-tall",
-]
+# Rectangle proportions, cycled across the photos. No frames, no colour.
+SHAPES = ["rect-tall", "rect", "rect-wide"]
 
 # Desktop vertical scatter magnitude per shape (vh). Tall frames move little so
-# they don't clip off the top/bottom; short/square frames swing more.
-DY_BY_SHAPE = {
-    "rect-tall": 3, "regal": 3, "arch": 2, "rect": 4, "hexagon": 4,
-    "oval-tall": 3, "heart": 11, "diamond": 13, "circle": 10, "oval-wide": 8,
-}
+# they don't clip off the top/bottom; wider/shorter ones swing more.
+DY_BY_SHAPE = {"rect-tall": 3, "rect": 5, "rect-wide": 8}
 
 ROT = [-2, 3, -4, 2, -3, 1.5, -1, 4, -2.5, 2.5, -3.5]   # deg
 DX = [1, -3, 4, -5, 2, -4, 3, -2, 5, -3]                 # vw (desktop x jitter)

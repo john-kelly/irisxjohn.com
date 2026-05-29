@@ -542,13 +542,6 @@ html:not(.entered) .hero-name {
 .gallery-track > *:nth-child(19n+18) { z-index: 2; }
 .gallery-track > *:nth-child(19n+19) { z-index: 16; }
 
-.gallery-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
 .gallery-item {
   position: relative;
   overflow: hidden;
@@ -600,110 +593,20 @@ html:not(.entered) .hero-name {
   font-weight: 400;
 }
 
+/* Just rectangles — no frames, no colour. Three proportions for variety. */
 .gallery-item--rect-tall {
   width: clamp(220px, 26vw, 420px);
   height: clamp(340px, 72vh, 620px);
-  border: clamp(8px, 0.9vw, 14px) solid var(--blue);
-}
-
-.gallery-item--oval-wide {
-  width: clamp(340px, 38vw, 620px);
-  height: clamp(280px, 50vh, 460px);
-  border: clamp(8px, 0.9vw, 14px) solid var(--red);
-  border-radius: 50%;
-}
-
-.gallery-item--circle {
-  width: clamp(300px, 32vw, 500px);
-  aspect-ratio: 1 / 1;
-  height: auto;
-  border: clamp(8px, 0.9vw, 14px) solid var(--gold);
-  border-radius: 50%;
 }
 
 .gallery-item--rect {
   width: clamp(260px, 30vw, 460px);
   height: clamp(300px, 60vh, 520px);
-  border: clamp(8px, 0.9vw, 14px) solid var(--cream);
 }
 
-.gallery-item--oval-tall {
-  width: clamp(260px, 28vw, 440px);
-  height: clamp(340px, 64vh, 580px);
-  border: clamp(8px, 0.9vw, 14px) solid var(--burgundy);
-  border-radius: 50%;
-}
-
-/* Shaped frames build their "border" from padding + a coloured background
-   that shows through around the clipped photo. Clip kills box-shadow, so
-   depth comes from a drop-shadow filter instead. */
-.gallery-item--heart,
-.gallery-item--arch,
-.gallery-item--diamond,
-.gallery-item--hexagon {
-  overflow: visible;
-  box-shadow: none;
-  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.4));
-}
-
-.gallery-item--heart {
-  width: clamp(300px, 32vw, 500px);
-  aspect-ratio: 1 / 1;
-  height: auto;
-  padding: clamp(12px, 1.3vw, 22px);
-  background: var(--red);
-  clip-path: url(#clip-heart);
-}
-.gallery-item--heart .photo { clip-path: url(#clip-heart); }
-
-.gallery-item--arch {
-  width: clamp(240px, 26vw, 400px);
-  height: clamp(340px, 66vh, 560px);
-  padding: clamp(12px, 1.3vw, 20px);
-  background: var(--cream);
-  clip-path: url(#clip-arch);
-}
-.gallery-item--arch .photo { clip-path: url(#clip-arch); }
-
-.gallery-item--diamond {
-  width: clamp(300px, 30vw, 460px);
-  aspect-ratio: 1 / 1;
-  height: auto;
-  padding: clamp(14px, 1.5vw, 24px);
-  background: var(--blue);
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-}
-.gallery-item--diamond .photo { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
-
-.gallery-item--hexagon {
-  width: clamp(300px, 32vw, 480px);
-  height: clamp(320px, 60vh, 520px);
-  padding: clamp(12px, 1.3vw, 22px);
-  background: var(--gold);
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-}
-.gallery-item--hexagon .photo { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
-
-/* Ornate gilded "museum" frame: a gold gradient border with a beveled
-   burgundy inner/outer rule and a thin gold liner against the photo. */
-.gallery-item--regal {
-  width: clamp(240px, 28vw, 420px);
-  height: clamp(320px, 64vh, 560px);
-  border: clamp(18px, 2vw, 34px) solid var(--gold);
-  border-image: linear-gradient(135deg, #fff3b0 0%, #e6b32a 22%, #9c7410 48%, #ffe784 68%, #c79a16 100%) 1;
-  box-shadow:
-    0 0 0 3px var(--burgundy),
-    inset 0 0 0 3px var(--burgundy),
-    inset 0 0 16px rgba(0, 0, 0, 0.4),
-    0 22px 46px rgba(0, 0, 0, 0.42);
-}
-
-.gallery-item--regal::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 2px solid rgba(255, 231, 132, 0.85);
-  pointer-events: none;
+.gallery-item--rect-wide {
+  width: clamp(340px, 38vw, 600px);
+  height: clamp(260px, 46vh, 440px);
 }
 
 /* Floating Photos trigger (desktop) ----------------------------------- */
@@ -869,13 +772,8 @@ html:not(.entered) .hero-name {
     height: auto;
   }
   .gallery-item--rect-tall,
-  .gallery-item--oval-tall,
-  .gallery-item--arch,
-  .gallery-item--regal,
   .gallery-item--rect { aspect-ratio: 3 / 4; }
-  .gallery-item--oval-wide { aspect-ratio: 5 / 4; }
-  .gallery-item--hexagon { aspect-ratio: 4 / 3; }
-  /* circle, heart and diamond are already 1 / 1 */
+  .gallery-item--rect-wide { aspect-ratio: 5 / 4; }
 
   .mobile-menu {
     position: fixed;

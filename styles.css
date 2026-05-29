@@ -481,6 +481,38 @@ html:not(.entered) .hero-name {
 .scene--story {
   background: var(--green);
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* The vow that ties the gallery together. On desktop it sits in the green band
+   below the centered photo strip (and above the photos in z-order so it stays
+   readable); on mobile it drops out of position:absolute and rides at the top
+   of the stacked feed (see the mobile block). */
+.story-quote {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(20px, 4.5vh, 56px);
+  z-index: 35; /* above the photos (which cap at 30), below the UI chrome (40) */
+  margin: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.story-quote-text {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(1.4rem, 3vw, 2.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+}
+
+.story-quote-text em {
+  font-style: italic;
+  font-weight: 400;
 }
 
 .gallery-track {
@@ -738,13 +770,25 @@ html:not(.entered) .hero-name {
     overflow-x: clip;
   }
 
+  /* At the top of the feed instead of overlaid below the photos. */
+  .story-quote {
+    position: static;
+    bottom: auto;
+    pointer-events: auto;
+  }
+
+  .story-quote-text {
+    max-width: 20ch;
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+  }
+
   .gallery-track {
     flex-direction: column;
     align-items: center;
     width: 100%;
     height: auto;
     gap: 0;
-    padding: clamp(84px, 20vw, 120px) 0 clamp(120px, 32vw, 168px);
+    padding: clamp(28px, 9vw, 56px) 0 clamp(120px, 32vw, 168px);
     animation: none;
   }
 

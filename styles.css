@@ -66,6 +66,7 @@ body {
 .page--details { background: var(--blue); }
 .page--registry { background: var(--green); }
 .page--rsvp { background: var(--burgundy); }
+.page--faq { background: var(--red); }
 
 /*NOTE: had to move these to scense bc of htmx...?*/
 /*i added overflow to body for now........*/
@@ -481,6 +482,170 @@ html:not(.entered) .hero-name {
     display: block;
     grid-row: auto;
   }
+}
+
+/* FAQ ----------------------------------------------------------------- */
+/* Long, scrollable page (like details/rsvp), so it pins to the top of the
+   scene rather than vertically centering. */
+.scene--faq {
+  background: var(--red);
+  color: var(--cream);
+  align-items: start;
+}
+
+.panel-inner--faq {
+  width: min(880px, 100%);
+}
+
+.faq-head {
+  margin-bottom: clamp(28px, 5vh, 52px);
+}
+
+.faq-head .display {
+  margin-top: 18px;
+}
+
+.faq-group {
+  margin-top: clamp(36px, 6vh, 60px);
+}
+
+.faq-group-title {
+  margin: 0 0 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid currentColor;
+  font-family: var(--sans);
+  font-size: clamp(0.74rem, 1vw, 0.88rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(245, 241, 232, 0.28);
+}
+
+/* The clickable question row. The native disclosure triangle is removed so the
+   custom +/- marker on the right is the only affordance. */
+.faq-q {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(20px, 4vw, 40px);
+  padding: clamp(18px, 2.4vw, 24px) 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2.1vw, 1.55rem);
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  transition: color 160ms ease;
+}
+
+.faq-q::-webkit-details-marker { display: none; }
+
+.faq-item[open] > .faq-q,
+.faq-q:hover,
+.faq-q:focus-visible {
+  color: var(--gold);
+  outline: none;
+}
+
+/* CSS-drawn +/- toggle: a horizontal bar always shows; the vertical bar
+   collapses when the item is open, turning the plus into a minus. */
+.faq-q-mark {
+  position: relative;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-top: 0.3em;
+}
+
+.faq-q-mark::before,
+.faq-q-mark::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease;
+}
+
+.faq-q-mark::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.faq-q-mark::after {
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.faq-item[open] .faq-q-mark::after {
+  transform: translateX(-50%) scaleY(0);
+  opacity: 0;
+}
+
+.faq-a {
+  padding: 2px 0 clamp(22px, 3vw, 30px);
+  max-width: 64ch;
+}
+
+.faq-item[open] .faq-a {
+  animation: faq-reveal 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes faq-reveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.faq-a p {
+  margin: 0 0 14px;
+  font-family: var(--serif-body);
+  font-size: clamp(1.12rem, 1.6vw, 1.28rem);
+  line-height: 1.5;
+}
+
+.faq-a p:last-child { margin-bottom: 0; }
+
+.faq-a strong { font-weight: 600; }
+
+.faq-a em {
+  font-style: italic;
+  opacity: 0.82;
+}
+
+.faq-link {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: opacity 160ms ease;
+}
+
+.faq-link:hover,
+.faq-link:focus-visible {
+  opacity: 0.7;
+  outline: none;
+}
+
+.faq-hotels {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.faq-hotels li {
+  font-family: var(--serif-body);
+  font-size: clamp(1.1rem, 1.6vw, 1.24rem);
+  line-height: 1.7;
 }
 
 /* Gallery / Photos scene --------------------------------------------- */

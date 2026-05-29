@@ -126,6 +126,7 @@ var THEME_COLORS = {
   "details.html": "#0076d0",  // .page--details  -> var(--blue)
   "registry.html": "#0d6638", // .page--registry -> var(--green)
   "rsvp.html": "#6b1018",     // .page--rsvp     -> var(--burgundy)
+  "faq.html": "#c11618",      // .page--faq      -> var(--red)
 };
 
 function pageThemeColor() {

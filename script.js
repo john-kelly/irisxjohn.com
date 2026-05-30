@@ -122,7 +122,7 @@ function setThemeColor(color) {
 // Per-page colors, matching the .page--X backgrounds in CSS.
 var THEME_COLORS = {
   "index.html": "black",      // .page--hero     -> black
-  "story.html": "#D36582",    // .page--story    -> var(--story)
+  "story.html": "#063B00",    // .page--story    -> var(--story)
   "details.html": "#950952",  // .page--details  -> var(--details)
   "registry.html": "#6a5ee4", // .page--registry -> var(--registry)
   "rsvp.html": "#710627",     // .page--rsvp     -> var(--rsvp)

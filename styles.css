@@ -35,17 +35,17 @@ summary {
   --gold: #ffd43a;
 
   /* Page background colors — one per main page. */
-  --story: #484554;
-  --details: #0d6638;
-  --faq: #25536b;        
-  --rsvp: #6b1018;
+  --story: #D36582;
+  --details: #950952;
+  --faq: #2B193D;        
+  --rsvp: #710627;
   --registry: #6a5ee4;
   --registry-hover: #5349b2;
 
   /* Fixed decorative accents for the story gallery marquee (kept independent
      of the page colors above). */
   --red: #c11618;            /* the big "&" sticker */
-  --burgundy: #6b1018;       /* the floating Photos button */
+  --burgundy: #710627;       /* the floating Photos button */
 
   --sans: Helveesti, "Helvetica Neue", Arial, sans-serif;
   --serif: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;

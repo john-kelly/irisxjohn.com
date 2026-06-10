@@ -531,6 +531,14 @@ html:not(.entered) .hero-name {
   opacity: 0.7;
 }
 
+.faq-shoutout p {
+  margin: 16px 0 0;
+  max-width: 64ch;
+  font-family: var(--serif-body);
+  font-size: clamp(1.12rem, 1.6vw, 1.28rem);
+  line-height: 1.55;
+}
+
 .faq-item {
   border-bottom: 1px solid rgba(245, 241, 232, 0.28);
 }
